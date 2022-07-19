@@ -16,13 +16,33 @@ app.use(express.urlencoded({ limit: '30mb', extended: true }));
 
 
 mongoose
-        .connect(URI, { useNewUrlParser: true })
-        .then(()=>{
-            console.log("database connected");
-        })
-        .catch(err =>{
-            console.log(err);
-        })
+    .connect(URI, { useNewUrlParser: true })
+    .then(()=>{
+        console.log("database connected");
+    })
+    .catch(err =>{
+        console.log(err);
+    });
+
+ 
+        
+
+app.get('/', async (req, res) => {
+    try {
+        res.status(200).json({
+            method: 'SERVER',
+            status: res.statusCode,
+            message: 'Server Active',
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            method: 'SERVER',
+            status: res.statusCode,
+            message: 'Server Inactive',
+        });
+    }
+});
 app.listen(PORT , ()=>{
     if(process.env.NODE_ENV == 'production'){
 
