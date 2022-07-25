@@ -25,6 +25,7 @@ mongoose
     .catch(err =>{
         console.log(err);
     });
+
 app.get('/', async (req, res) => {
     try {
         res.status(200).json({
