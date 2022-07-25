@@ -5,14 +5,16 @@ import cors from 'cors';
 import helmet from 'helmet';
 import mongoose from 'mongoose';
 
-
+import getAllUserActionLinks from "./server/Routes/getLinks.js"
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const URI = `mongodb+srv://virtualLab:${process.env.DB_PASSWORD}@cluster0.e6bxe.mongodb.net/?retryWrites=true&w=majority`;
 app.use(helmet());
 app.use(cors());
 app.use(express.json({ limit: '30mb', extended: true }));
 app.use(express.urlencoded({ limit: '30mb', extended: true }));
+
+app.use("/links",getAllUserActionLinks);
 
 
 mongoose
