@@ -16,17 +16,10 @@ function Body() {
     navigate(path);
   };
   const [links, setLinks] = useState([{ links: [] }]);
-  const [open, setOpen] = useState(false);
 
   const { id } = useParams();
   const url = `/AddLinks/${id}`;
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClick = (link) => {
-    window.location = "www.google.com";
-  };
   const getLinks = async () => {
     const data = await axios.get(`/links/${id}`).then((res) => res.data);
     console.log(data);

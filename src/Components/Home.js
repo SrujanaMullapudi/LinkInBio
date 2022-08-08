@@ -1,18 +1,13 @@
-import { create } from "@mui/material/styles/createTransitions";
 import React, { useState } from "react";
-import SearchAppBar from "./UI/Appbar";
-import Input from "./UI/Input";
+
 import { v4 as uuidv4 } from "uuid";
 import { Alert, AlertTitle } from "@mui/material";
 
 import "../Styles/Home.css";
 function Home() {
-  const [input, setInput] = useState("");
   const [flag, setFlag] = useState(false);
   const [url,setUrl] = useState("");
-  const handleNameInput = (e) => {
-    setInput(e.target.value);
-  };
+
   const id = uuidv4();
   const handleSubmit = () => {
     setUrl(`/links/${id}`)
