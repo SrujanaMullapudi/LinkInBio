@@ -10,10 +10,11 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 const URI = `mongodb+srv://virtualLab:${process.env.DB_PASSWORD}@cluster0.e6bxe.mongodb.net/?retryWrites=true&w=majority`;
 app.use(helmet());
-var corsOptions = {
-  origin: "http://localhost:3000/",
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
+const corsOptions ={
+    origin:'http://localhost:3000', 
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200
+}
 app.options("*", cors());
 app.use(cors(corsOptions));
 app.use(express.json({ limit: "30mb", extended: true }));
