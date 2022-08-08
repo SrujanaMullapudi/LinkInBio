@@ -1,6 +1,6 @@
 import { Alert, AlertTitle } from "@mui/material";
 import React, { useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 import Button from "./UI/Button";
 import axios from "../axios";
@@ -14,8 +14,13 @@ const textStyle = {
 };
 
 function AddLink(props) {
+  let navigate = useNavigate();
+  const routerChange = (link) => {
+    let path = link;
+    navigate(path);
+  };
   const [validURL, setValidURl] = useState(false);
-  let flag = 0;
+  const [flag,setFlag] = useState(0);
   const [data, setData] = useState({
     uid: props.id,
     name: "",
@@ -30,14 +35,22 @@ function AddLink(props) {
     setData({ ...data, link: e.target.value });
     setValidURl(false);
   };
-  const sendData = () => {
+  const url = `/links/${id}`;
+  const changeLocation = () =>{
+    window.location(`/links/${id}`)
+  }
+  const sendData = async () => {
     console.log("hi");
     if (isValidUrl(data.link)) {
-      flag = 1;
-      axios.post(`/links/${id}`, data).then(() => {});
-      window.location = `/links/${id}`;
+      setFlag(1);
+      await axios.post(`/links/${id}`, data).then((res) => {
+        console.log(res.data);
+      }).catch(err => {
+        console.log(err);
+      });
     } else {
       setValidURl(true);
+
     }
   };
 
@@ -81,6 +94,7 @@ function AddLink(props) {
             <AlertTitle>success</AlertTitle>
             Your URL has been added to your tree —{" "}
             <strong>check it out!</strong>
+            <a href = {url} > click to navigate back </a>
           </Alert>
         ) : (
           <></>
