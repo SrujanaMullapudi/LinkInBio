@@ -49,3 +49,23 @@ export const getLinks = (req, res) => {
     res.status(404).json({ message: error.message });
   }
 };
+
+export const checkUsernameAvailable = (req,res) =>{
+  try{
+    const name = req.body.name;
+    console.log(name);
+    Users.find({userId: name}, (err,foundUsers)=>{
+      if(err){
+        console.log(err);
+      }else{
+        if(foundUsers.length > 0){
+          res.status(200).json({message: "username already present"});
+        }else{
+          res.status(200).json(foundUsers);
+        }
+      }
+    })
+  }catch(error){
+    res.status(404).json({message: error.message});
+  }
+}
