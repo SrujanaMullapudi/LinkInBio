@@ -1,26 +1,42 @@
 import React, { useState } from "react";
 
 import { v4 as uuidv4 } from "uuid";
-import { Snackbar,Alert, AlertTitle } from "@mui/material";
+import { Snackbar, Alert, AlertTitle } from "@mui/material";
 
+import axios from "../axios";
 import "../Styles/Home.css";
 function Home() {
+  const [data, setNameData] = useState({name:""});
+  const [availableUsername, setAvailableUsername] = useState(false);
   const [flag, setFlag] = useState(false);
   const [url, setUrl] = useState("");
   const [open, setOpen] = useState(false);
   const id = uuidv4();
-  const handleSubmit = () => {
-    setUrl(`/links/${id}`);
-    setFlag(true);
+  const handleInputChange = (event) => {
+    setNameData({name:event.target.value});
+    setFlag(false);
+    setAvailableUsername(false);
   };
-  const handleClose = ()=>{
+  const handleClose = () => {
     setOpen(false);
-  }
+  };
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(`https://kindalinktree.netlify.app${url}`);
     setOpen(true);
-  }
+  };
+
+  const checkUsernameAvailable = async () => {
+    const apiData = await axios
+      .post("/links/checkusername",data)
+      .then((res) => res.data);
+      if(apiData.message === "username already present"){
+        setAvailableUsername(true);
+      }else{
+        setUrl(`/links/${data.name}`);
+        setFlag(true);
+      }
+  };
   return (
     <div className="home">
       <div className="App">
@@ -31,24 +47,34 @@ function Home() {
             placeholder="Add Your Tree Name"
             onChange={handleNameInput}
           /> */}
-          <button className="button" onClick={handleSubmit}>
+          <input onChange={handleInputChange} placeholder="Enter Your Name" />
+          <button className="button" onClick={checkUsernameAvailable}>
             create Tree
           </button>
           {flag !== false ? (
             <Alert
-              sx={{ color: "white", width: "300px" }}
+              sx={{ color: "white", width: "300px", marginBottom: "30px" }}
               variant="outlined"
               severity="success"
             >
               <AlertTitle>success</AlertTitle>
               Your tree has been created — <strong>check it out!</strong>{" "}
-              <p
-                id="copy"
-                onClick={copyToClipboard}
-              >
+              <p id="copy" onClick={copyToClipboard}>
                 Copy your link: https://kindalinktree.netlify.app{url}
               </p>{" "}
               <a href={url}> click to navigate </a>
+            </Alert>
+          ) : (
+            <></>
+          )}
+          {availableUsername !== false ? (
+            <Alert
+              sx={{ color: "white", width: "300px", marginBottom: "30px" }}
+              variant="outlined"
+              severity="error"
+            >
+              <AlertTitle>Oopsy</AlertTitle>
+              Your Username is Already Present please try a different one{" "}
             </Alert>
           ) : (
             <></>
@@ -58,7 +84,7 @@ function Home() {
           <Alert
             onClose={handleClose}
             severity="success"
-            sx={{ width: "100%" , backgroundColor: "green"}}
+            sx={{ width: "100%", backgroundColor: "green" }}
           >
             Your Link is Copied to Clipboard
           </Alert>

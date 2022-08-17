@@ -1,7 +1,5 @@
 import {Routes , Route} from 'react-router';
-import DisplayPicture from './Components/DisplayPicture';
-import Bio from './Components/Bio';
-import Footer from './Components/Footer';
+
 import "./Styles/App.css";
 import Body from './Components/Body';
 import Home from './Components/Home';
