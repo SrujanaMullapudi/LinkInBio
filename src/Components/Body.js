@@ -34,6 +34,7 @@ function Body(props) {
     console.log(data);
     if(data.length === 0 ){
       console.log(data.length);
+      navigate("/createLink")
     }
     if (data[0].links !== undefined) {
       setLinks(data);
