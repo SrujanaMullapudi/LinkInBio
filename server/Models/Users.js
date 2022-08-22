@@ -6,6 +6,12 @@ const userSchema = new Schema({
         type: String,
         // required: true
     },
+    userName:{
+        type: String,
+    },
+    photoURL:{
+        type: String,
+    },
     links : {
         type : Array,
         // required: true
