@@ -23,7 +23,7 @@
     align-items: center;
     font-weight: bold;
 }
-@media screen and (max-widht : 480px) {
+@media screen and (max-widht : 520px) {
     .navbar{
         padding: 15px;
     }

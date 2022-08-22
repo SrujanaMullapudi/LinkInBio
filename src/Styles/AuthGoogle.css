@@ -19,7 +19,7 @@
 .buttonAuth p{
     margin: 10px;
 }
-@media screen and (max-width: 480px){
+@media screen and (max-width: 520px){
     .buttonAuth{
         width: 200px;
     }
