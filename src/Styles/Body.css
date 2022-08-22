@@ -6,3 +6,9 @@
     height: 100vh;
     background-color: black;
 }
+
+@media screen and (max-width: 480px) {
+    .Body{
+        height: 823px;
+    }
+}

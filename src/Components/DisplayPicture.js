@@ -5,10 +5,10 @@ import React from 'react'
 import image from '../Images/face.jpg';
 
 
-function DisplayPicture() {
+function DisplayPicture(props) {
   return (
     <div className="image">
-        <img src={image} alt=""/>
+        <img src={props.imageURL} alt="" referrerPolicy="no-referrer"/>
     </div>
   )
 }

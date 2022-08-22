@@ -1,32 +1,25 @@
 import { Alert, AlertTitle } from "@mui/material";
 import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router";
-
-import Button from "./UI/Button";
+import { Navigate, useNavigate, useParams } from "react-router";
+import { v4 as uuid } from "uuid";
 import axios from "../axios";
 import { isValidUrl } from "./Helpers/urlChecker";
-
 import "../Styles/AddLink.css";
+import { useAuth } from "../Contexts/AuthContext";
 
-const textStyle = {
-  width: "80%",
-  margin: "25px",
-};
-
-function AddLink(props) {
-  let navigate = useNavigate();
-  const routerChange = (link) => {
-    let path = link;
-    navigate(path);
-  };
+function AddLink() {
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [validURL, setValidURl] = useState(false);
-  const [flag,setFlag] = useState(0);
+  const [flag, setFlag] = useState(0);
+  const [disable,setDisable] = useState(false);
   const [data, setData] = useState({
-    uid: props.id,
+    uid: uuid(),
     name: "",
     link: "",
   });
   const { id } = useParams();
+
   const handleNameInput = (e) => {
     setData({ ...data, name: e.target.value });
     setValidURl(false);
@@ -35,44 +28,45 @@ function AddLink(props) {
     setData({ ...data, link: e.target.value });
     setValidURl(false);
   };
-  const url = `/links/${id}`;
-  const changeLocation = () =>{
-    window.location(`/links/${id}`)
-  }
+  // const setId = () => {
+  //   setData({ ...data, uid: uuid() });
+  //   setValidURl(false);
+  // };
+  const url = `/account/${id}`;
+
   const sendData = async () => {
     console.log("hi");
-    if (isValidUrl(data.link)) {
-      setFlag(1);
-      await axios.post(`/links/${id}`, data).then((res) => {
-        console.log(res.data);
-      }).catch(err => {
-        console.log(err);
-      });
-    } else {
-      setValidURl(true);
-
+    if (data.name.length > 0) {
+      // setId();
+      setDisable(true);
+      console.log(data);
+      if (isValidUrl(data.link)) {
+        setFlag(1);
+        await axios
+          .post(`/links/${id}`, data)
+          .then((res) => {
+            console.log(res.data);;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        setValidURl(true);
+      }
     }
   };
 
-  const handleSubmit = () => {
-    sendData();
+  const handleSubmit = async() => {
+    await sendData();
   };
   return (
     <div className="AddLink">
       <div className="box">
-        <p>Add Link</p>
-        <input
-          type="text"
-          placeholder="Add URL Name"
-          onChange={handleNameInput}
-        />
-        <input
-          type="text"
-          placeholder="Add URL Link"
-          onChange={handleLinkInput}
-        />
-        <button className="button" onClick={handleSubmit}>
-          AddLink
+        <p id="header">Add Link</p>
+        <input disabled={disable} type="text" placeholder="URL Name" onChange={handleNameInput} />
+        <input disabled={disable} type="text" placeholder="URL Link" onChange={handleLinkInput} />
+        <button disabled={disable} className="button" onClick={handleSubmit}>
+          Submit
         </button>
       </div>
       <div>
@@ -94,7 +88,7 @@ function AddLink(props) {
             <AlertTitle>success</AlertTitle>
             Your URL has been added to your tree —{" "}
             <strong>check it out!</strong>
-            <a href = {url} > click to navigate back </a>
+            <a href={url}> click to navigate back </a>
           </Alert>
         ) : (
           <></>

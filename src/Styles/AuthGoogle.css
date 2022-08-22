@@ -1,0 +1,30 @@
+/* .auth{
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+.buttonAuth{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 230px;
+    height: 50px;
+    background-color: #C21010;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+}
+.buttonAuth p{
+    margin: 10px;
+}
+@media screen and (max-width: 480px){
+    .buttonAuth{
+        width: 200px;
+    }
+    .buttonAuth p{
+        margin: 5px;
+    }
+
+}
