@@ -43,7 +43,7 @@ function CreateLink() {
         setAvailableUsername(true);
       } else {
         setPublicURL(`public/${data.name}`);
-        setUrl(`/acoount/${data.uid}`);
+        setUrl(`signIn/account/${data.uid}`);
         setFlag(true);
       }
     }else{

@@ -4,10 +4,11 @@ import "./Styles/App.css";
 import Body from "./Components/Body";
 import CreateLink from "./Components/CreateLink";
 import AddLink from "./Components/AddLink";
-import Home from "./Components/Home";
+import SignIn from "./Components/SignIn";
 import { AuthContextProvider } from "./Contexts/AuthContext";
 import Protected from "./Components/Helpers/Protected";
 import Navbar from "./Components/Navbar";
+import PublicViewing from "./Components/PublicViewing";
 
 function App() {
   return (
@@ -15,10 +16,15 @@ function App() {
       <AuthContextProvider>
         <Navbar />
         <Routes>
-          <Route exact path="/" element={<Home />}></Route>
           <Route
             exact
-            path="/account/:id"
+            path="/public-viewing/:username"
+            element={<PublicViewing />}
+          ></Route>
+          <Route exact path="/signIn" element={<SignIn />}></Route>
+          <Route
+            exact
+            path="signIn/account/:id"
             element={
               <Protected>
                 <Body />

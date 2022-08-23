@@ -24,14 +24,14 @@ function Body(props) {
     navigate(path);
   };
   const [links, setLinks] = useState([{ links: [] }]);
-
+  const [linkDelete,setLinkDelete] = useState(false);
   const { id } = useParams();
 
 
   const getLinks = async () => {
     console.log("in get links")
-    const data = await axios.get(`/links/${user.uid}`).then((res) => res.data);
-    console.log(data);
+    const data = await axios.get(`/links/${id}`).then((res) => res.data);
+    console.log(data,id);
     if(data.length === 0 ){
       console.log(data.length);
       navigate("/createLink")
@@ -41,9 +41,13 @@ function Body(props) {
     }
   };
 
+  const handleSetDelete = (data) =>{
+    setLinkDelete(data);
+  }
+
   useEffect(() => {
     getLinks();
-  }, [user]);
+  }, [user,linkDelete]);
 
   return (
     <div className="Body">
@@ -54,7 +58,10 @@ function Body(props) {
         links[0].links.map((link) => (
           <div>
             <Button
+              key={link.id}
               idx={link.id}
+              delete={linkDelete}
+              handleSetDelete={handleSetDelete}
               user = {user}
               url={link.link}
               onClick={() => routerChange(link.link)}

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { useNavigate, useParams } from "react-router";
+import { Link } from "react-router-dom";
+import { useNavigate, useParams, } from "react-router";
 import { useAuth } from "../Contexts/AuthContext";
 import AuthGoogle from "../Utils/AuthGoogle";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
@@ -20,11 +21,7 @@ function Navbar() {
       console.log(error);
     }
   };
-  useEffect(() => {
-    if (user !== null) {
-      navigate(`account/${user.uid}`);
-    }
-  }, [user]);
+
 
   return (
     <div className="navbar">
@@ -34,7 +31,7 @@ function Navbar() {
       </div>
       <div className="signIn">
         {user === null ? (
-          <AuthGoogle />
+          <Link to="/signIn" >Sign In</Link>
         ) : (
           <div className="logout" onClick={handleLogout}>
             <LogoutIcon id="#logout" />

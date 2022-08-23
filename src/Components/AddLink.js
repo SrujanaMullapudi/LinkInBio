@@ -1,6 +1,7 @@
 import { Alert, AlertTitle } from "@mui/material";
 import React, { useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router";
+import { NavLink } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 import axios from "../axios";
 import { isValidUrl } from "./Helpers/urlChecker";
@@ -32,7 +33,7 @@ function AddLink() {
   //   setData({ ...data, uid: uuid() });
   //   setValidURl(false);
   // };
-  const url = `/account/${id}`;
+  const url = `signIn/account/${id}`;
 
   const sendData = async () => {
     console.log("hi");
@@ -50,12 +51,15 @@ function AddLink() {
           .catch((err) => {
             console.log(err);
           });
+          navigate(`signIn/account/${id}`,{replace:true});
       } else {
         setValidURl(true);
       }
     }
   };
-
+  const handleRouterChange = ()=>{
+    navigate(-1);
+  }
   const handleSubmit = async() => {
     await sendData();
   };
@@ -88,7 +92,7 @@ function AddLink() {
             <AlertTitle>success</AlertTitle>
             Your URL has been added to your tree —{" "}
             <strong>check it out!</strong>
-            <a href={url}> click to navigate back </a>
+            <div to={url} onClick={handleRouterChange}> click to navigate back </div>
           </Alert>
         ) : (
           <></>

@@ -6,7 +6,7 @@ import {useAuth} from "../../Contexts/AuthContext";
 function Protected({children}) {
     const {user} = useAuth();
     if(!user){
-        return <Navigate to={`/`} />
+        return <Navigate to={`/signIn`} />
     }
   return children;
 }
