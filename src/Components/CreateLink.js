@@ -36,9 +36,11 @@ function CreateLink() {
 
   const checkUsernameAvailable = async () => {
     if (data.name.length !== 0) {
+      console.log(data);
       const apiData = await axios
         .post("/links/checkusername", data)
         .then((res) => res.data);
+        console.log(apiData)
       if (apiData.message === "username already present") {
         setAvailableUsername(true);
       } else {
@@ -46,8 +48,6 @@ function CreateLink() {
         setUrl(`signIn/account/${data.uid}`);
         setFlag(true);
       }
-    }else{
-      
     }
   };
   return (
