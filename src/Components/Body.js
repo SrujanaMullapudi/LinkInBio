@@ -46,6 +46,7 @@ function Body(props) {
   }
 
   useEffect(() => {
+    console.log("hi");
     getLinks();
   }, [user,linkDelete]);
 
