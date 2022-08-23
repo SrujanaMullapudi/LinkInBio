@@ -38,7 +38,7 @@ function AddLink() {
       console.log(data);
       if (isValidUrl(data.link)) {
         setFlag(1);
-        const data = await axios
+        const promise_data = await axios
           .post(`/links/${id}`, data)
           .then((res) => {
             console.log(res.data);
