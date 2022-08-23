@@ -33,7 +33,6 @@ mongoose
 
 app.get("/", async (req, res) => {
   try {
-    res.header("Access-Control-Allow-Origin","*")
     res.status(200).json({
       method: "SERVER",
       status: res.statusCode,

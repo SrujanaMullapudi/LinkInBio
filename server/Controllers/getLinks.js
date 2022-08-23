@@ -61,7 +61,7 @@ export const checkUsernameAvailable = (req, res) => {
     const id = req.body.uid;
     const photoURL = req.body.photoURL;
     console.log(name, id, photoURL);
-    Users.find({ userId: id }, (err, foundUsers) => {
+    Users.find({ userName: name }, (err, foundUsers) => {
       if (err) {
         console.log(err);
       } else {
