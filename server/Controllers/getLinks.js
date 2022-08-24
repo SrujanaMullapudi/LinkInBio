@@ -21,15 +21,10 @@ export const postLinks = (req, res) => {
                 console.log(err);
               } else {
                 console.log(foundUser);
+                res.status(200).json({message:"links added successfully"});
               }
             }
           );
-        } else {
-          const user = new Users({
-            userId: req.params.uid,
-          });
-          user.links.push(link);
-          user.save();
         }
       }
     });
