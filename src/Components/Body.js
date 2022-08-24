@@ -12,11 +12,9 @@ import DisplayPicture from "./DisplayPicture";
 import "../Styles/Body.css";
 import Footer from "./Footer";
 import { Link } from "react-router-dom";
-import DeleteIcon from '@mui/icons-material/Delete';
 
 function Body(props) {
-
-  const {logout, user} = useAuth();
+  const { user } = useAuth();
 
   let navigate = useNavigate();
   const routerChange = (link) => {
@@ -24,36 +22,36 @@ function Body(props) {
     navigate(path);
   };
   const [links, setLinks] = useState([{ links: [] }]);
-  const [linkDelete,setLinkDelete] = useState(false);
+  const [linkDelete, setLinkDelete] = useState(false);
   const { id } = useParams();
 
+  const handleSetDelete = (data) => {
+    setLinkDelete(data);
+  };
 
   const getLinks = async () => {
-    console.log("in get links")
+    console.log("in get links");
     const data = await axios.get(`/links/${id}`).then((res) => res.data);
-    console.log(data,id);
-    if(data.length === 0 ){
+    console.log(data, id);
+    if (data.length === 0) {
       console.log(data.length);
-      navigate("/createLink")
+      navigate("/createLink");
     }
     if (data[0].links !== undefined) {
       setLinks(data);
     }
   };
 
-  const handleSetDelete = (data) =>{
-    setLinkDelete(data);
-  }
 
   useEffect(() => {
     console.log("hi");
     getLinks();
-  }, [user,linkDelete]);
+  }, [user, linkDelete]);
 
   return (
     <div className="Body">
-    {console.log(user)}
-      <DisplayPicture imageURL={user.photoURL}/>
+      {console.log(user)}
+      <DisplayPicture imageURL={user.photoURL} />
       {console.log(links[0])}
       {links[0].links.length <= 4 ? (
         links[0].links.map((link) => (
@@ -63,7 +61,7 @@ function Body(props) {
               idx={link.id}
               delete={linkDelete}
               handleSetDelete={handleSetDelete}
-              user = {user}
+              user={user}
               url={link.link}
               onClick={() => routerChange(link.link)}
               name={link.name}
@@ -75,8 +73,8 @@ function Body(props) {
       )}
       {links[0].links.length < 4 ? (
         <div>
-        {console.log(id)}
-          <Link to={`/AddLinks/${id}`} >Add Links</Link>
+          {console.log(id)}
+          <Link to={`/AddLinks/${id}`}>Add Links</Link>
           {/* <Button sx={{width : 400 }} type="outlined" href={url}>Add Link</Button> */}
         </div>
       ) : (

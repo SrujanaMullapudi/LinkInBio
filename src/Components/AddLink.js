@@ -58,8 +58,8 @@ function AddLink() {
   const handleRouterChange = () => {
     navigate(-1);
   };
-  const handleSubmit = async () => {
-    await sendData();
+  const handleSubmit =  () => {
+    sendData();
   };
   return (
     <div className="AddLink">
