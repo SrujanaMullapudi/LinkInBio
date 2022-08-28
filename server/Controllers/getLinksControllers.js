@@ -21,7 +21,7 @@ export const postLinks = (req, res) => {
                 console.log(err);
               } else {
                 console.log(foundUser);
-                res.status(200).json({message:"links added successfully"});
+                res.status(200).json({ message: "links added successfully" });
               }
             }
           );
@@ -91,7 +91,7 @@ export const deleteLink = async (req, res) => {
       { userId: id },
       { links: newLinkArray }
     );
-    res.send({message:"success"});
+    res.send({ message: "success" });
   } catch (error) {
     console.log(error);
   }
@@ -108,4 +108,57 @@ export const publicViewing = (req, res) => {
       res.status(200).json(founduser);
     }
   });
+};
+
+export const getEditLink = (req, res) => {
+  try {
+    const userId = req.params.uid;
+    const linkId = req.params.linkId;
+    Users.find({ userId }, (err, foundUser) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.status(200).json(
+          foundUser[0].links.filter((link) => {
+            return link.id === linkId;
+          })
+        );
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const editLink = async (req, res) => {
+  try {
+    const userId = req.params.uid;
+    const linkId = req.params.linkId;
+    // console.log(linkId);
+    const newLinkName = req.body.name;
+    const newLinkURL = req.body.URL;
+    console.log(req.body);
+    // Users.find({userId:userId, "links.$.id" : linkId}, (err,foundUser)=>{
+    //   if(err){
+    //     console.log(err);
+    //   }else{
+    //     console.log(foundUser);
+    //   }
+    // })
+    // console.log(newLinkURL,newLinkName);
+    Users.updateOne(
+      { userId: userId, "links.id": linkId },
+      {
+        $set: {
+          "links.$.name": newLinkName,
+          "links.$.link": newLinkURL,
+        },
+      },function(err){
+        console.log(err);
+      }
+    );
+    res.status(200).json({message:"successfully updated"});
+  } catch (error) {
+    console.log(error);
+  }
 };
