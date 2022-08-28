@@ -42,7 +42,6 @@ function Body(props) {
     }
   };
 
-
   useEffect(() => {
     console.log("hi");
     getLinks();
@@ -52,35 +51,35 @@ function Body(props) {
     <div className="Body">
       {console.log(user)}
       <DisplayPicture imageURL={user.photoURL} />
+      <Footer />
+
       {console.log(links[0])}
-      {links[0].links.length <= 4 ? (
-        links[0].links.map((link) => (
-          <div>
-            <Button
-              key={link.id}
-              idx={link.id}
-              delete={linkDelete}
-              handleSetDelete={handleSetDelete}
-              user={user}
-              url={link.link}
-              onClick={() => routerChange(link.link)}
-              name={link.name}
-            />
-          </div>
-        ))
-      ) : (
-        <div></div>
-      )}
-      {links[0].links.length < 4 ? (
+      <div className="Body-links">
+        {(
+          links[0].links.map((link) => (
+            <div className="Body-button">
+              <Button
+                key={link.id}
+                idx={link.id}
+                delete={linkDelete}
+                handleSetDelete={handleSetDelete}
+                user={user}
+                url={link.link}
+                onClick={() => routerChange(link.link)}
+                name={link.name}
+              />
+            </div>
+          ))
+        )}
+      </div>
+
+      {(
         <div>
           {console.log(id)}
           <Link to={`/AddLinks/${id}`}>Add Links</Link>
           {/* <Button sx={{width : 400 }} type="outlined" href={url}>Add Link</Button> */}
         </div>
-      ) : (
-        <div></div>
       )}
-      <Footer />
     </div>
   );
 }

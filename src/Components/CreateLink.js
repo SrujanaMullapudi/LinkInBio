@@ -44,7 +44,7 @@ function CreateLink() {
       if (apiData.message === "username already present") {
         setAvailableUsername(true);
       } else {
-        setPublicURL(`public/${data.name}`);
+        setPublicURL(`/public-viewing/${data.name}`);
         setUrl(`signIn/account/${data.uid}`);
         setFlag(true);
       }
@@ -55,11 +55,6 @@ function CreateLink() {
       <div className="App">
         <p>Create Your Tree.</p>
         <div className="box">
-          {/* <input
-            type="text"
-            placeholder="Add Your Tree Name"
-            onChange={handleNameInput}
-          /> */}
           <input onChange={handleInputChange} placeholder="Enter Your Name" />
           <button className="button" onClick={checkUsernameAvailable}>
             create Tree
@@ -102,7 +97,6 @@ function CreateLink() {
             Your Link is Copied to Clipboard
           </Alert>
         </Snackbar>
-        {/* <Input button={buttonName} /> */}
       </div>
     </div>
   );

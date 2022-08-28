@@ -6,7 +6,27 @@
     height: 100vh;
     background-color: black;
 }
+.Body-links{
+    max-height: 400px;
+    overflow-x: hidden;
+}
 
+.Body-button{
+    margin: 50px;
+}
+
+.Body ::-webkit-scrollbar{
+    width: 2px;
+    transition: ease-in-out 3s;
+
+}
+.Body-links:hover ::-webkit-scrollbar-track{
+    background-color: transparent;
+}
+.Body:hover ::-webkit-scrollbar-thumb{
+    background-color: rgb(39, 39, 39);
+    border-radius: 30px;
+}
 @media screen and (max-width: 480px) {
     .Body{
         height: 823px;

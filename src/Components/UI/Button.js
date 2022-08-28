@@ -5,19 +5,26 @@ import SignIn from "../SignIn";
 import "../../Styles/Button.css";
 import { useState } from "react";
 import DeleteDialog from "./DeleteDialog";
-
+import EditDialog from "./EditDialog";
 import axios from "../../axios";
 import { CircularProgress } from "@mui/material";
 import { Box } from "@mui/system";
+import { useNavigate } from "react-router";
 
 function Button(props) {
-  const [openDialog, setOpenDialog] = useState(false);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [openEditDialog, setOpenEditDialog] = useState(false);
+  const navigate = useNavigate();
+
   const [loader, setLoader] = useState(false);
 
   const handleSetOpen = (data) => {
-    setOpenDialog(data);
+    setOpenDeleteDialog(data);
   };
 
+  const handleEditSetOpen = (data) => {
+    setOpenEditDialog(data);
+  };
   const handleDelete = async (data) => {
     if (data) {
       setLoader(true);
@@ -32,7 +39,7 @@ function Button(props) {
     }
   };
   const handleEdit = () => {
-    return <SignIn />;
+    navigate(`/Edit/${props.user.uid}/${props.idx}`);
   };
 
   return (
@@ -55,11 +62,22 @@ function Button(props) {
 
         <EditIcon onClick={handleEdit} className="edit" />
       </div>
-      {openDialog ? (
+      {openDeleteDialog ? (
         <DeleteDialog
-          open={openDialog}
+          open={openDeleteDialog}
           handleDelete={handleDelete}
           setOpen={handleSetOpen}
+        />
+      ) : (
+        <></>
+      )}
+      {openEditDialog ? (
+        <EditDialog
+          open={openEditDialog}
+          handleEdit={handleEdit}
+          setOpen={handleEditSetOpen}
+          urlName={props.name}
+          urlLink={props.url}
         />
       ) : (
         <></>

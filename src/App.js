@@ -9,6 +9,7 @@ import { AuthContextProvider } from "./Contexts/AuthContext";
 import Protected from "./Components/Helpers/Protected";
 import Navbar from "./Components/Navbar";
 import PublicViewing from "./Components/PublicViewing";
+import Edit from "./Components/Edit";
 
 function App() {
   return (
@@ -49,6 +50,11 @@ function App() {
               </Protected>
             }
           ></Route>
+          <Route exact path="/Edit/:uid/:linkId" element={
+            <Protected>
+              <Edit />
+            </Protected>
+          }></Route>
         </Routes>
       </AuthContextProvider>
     </div>

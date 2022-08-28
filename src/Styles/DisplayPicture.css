@@ -1,6 +1,11 @@
+.image{
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .image img{
     height: 100px;
-    margin: 40px;
     margin-bottom: 0;
     border-radius: 100%;
     display: flex;

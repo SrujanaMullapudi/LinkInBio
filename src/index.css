@@ -1,3 +1,6 @@
+*{
+  margin: 0;
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -8,6 +11,18 @@ body {
   background-color: black;
 }
 
+body ::-webkit-scrollbar{
+  width : 2px;
+}
+
+body ::-webkit-scrollbar-track{
+  width : 2px;
+}
+
+#cursor{
+  cursor: pointer;
+  text-decoration: underline;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
