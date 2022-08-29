@@ -60,7 +60,7 @@ function Button(props) {
           </a>
         )}
 
-        <EditIcon onClick={handleEdit} className="edit" />
+        <EditIcon  onClick={handleEdit} className="edit" />
       </div>
       {openDeleteDialog ? (
         <DeleteDialog

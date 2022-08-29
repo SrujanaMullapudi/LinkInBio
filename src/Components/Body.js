@@ -12,6 +12,27 @@ import DisplayPicture from "./DisplayPicture";
 import "../Styles/Body.css";
 import Footer from "./Footer";
 import { Link } from "react-router-dom";
+import { Fab } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+
+const fabStyle = {
+  position: "absolute",
+  bottom: 20,
+  right: 30,
+  backgroundColor: "white",
+  "@media(max-width:480px)": {
+    bottom: 25,
+    right: 25,
+  },
+  "&:hover": {
+    backgroundColor: "#CFD2CF",
+    color:"black"
+  },
+};
+
+const addStyle = {
+  color: "black",
+};
 
 function Body(props) {
   const { user } = useAuth();
@@ -55,31 +76,36 @@ function Body(props) {
 
       {console.log(links[0])}
       <div className="Body-links">
-        {(
-          links[0].links.map((link) => (
-            <div className="Body-button">
-              <Button
-                key={link.id}
-                idx={link.id}
-                delete={linkDelete}
-                handleSetDelete={handleSetDelete}
-                user={user}
-                url={link.link}
-                onClick={() => routerChange(link.link)}
-                name={link.name}
-              />
-            </div>
-          ))
-        )}
+        {links[0].links.map((link) => (
+          <div className="Body-button">
+            <Button
+              key={link.id}
+              idx={link.id}
+              delete={linkDelete}
+              handleSetDelete={handleSetDelete}
+              user={user}
+              url={link.link}
+              onClick={() => routerChange(link.link)}
+              name={link.name}
+            />
+          </div>
+        ))}
       </div>
 
-      {(
+      {
         <div>
           {console.log(id)}
-          <Link to={`/AddLinks/${id}`}>Add Links</Link>
+          <div className="Body-addLink">
+            <Fab sx={fabStyle}>
+              <Link to={`/AddLinks/${id}`}>
+                <AddIcon />
+              </Link>
+            </Fab>
+          </div>
+
           {/* <Button sx={{width : 400 }} type="outlined" href={url}>Add Link</Button> */}
         </div>
-      )}
+      }
     </div>
   );
 }

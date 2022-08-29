@@ -15,6 +15,9 @@
     margin: 50px;
 }
 
+.Body-addLink a{
+    color: black
+}
 .Body ::-webkit-scrollbar{
     width: 2px;
     transition: ease-in-out 3s;
@@ -31,4 +34,5 @@
     .Body{
         height: 823px;
     }
+
 }

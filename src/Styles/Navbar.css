@@ -5,6 +5,7 @@
     align-items: center;
     padding: 10px;
     margin-bottom: 0;
+    color: white;
 }
 
 .navbar-logo{
@@ -27,5 +28,8 @@
 @media screen and (max-widht : 520px) {
     .navbar{
         padding: 15px;
+    }
+    .logout{
+      margin-right:70px;
     }
 }
