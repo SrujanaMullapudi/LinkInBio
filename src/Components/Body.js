@@ -23,7 +23,7 @@ function Body(props) {
   };
   const [links, setLinks] = useState([{ links: [] }]);
   const [linkDelete, setLinkDelete] = useState(false);
-  const { id } = useParams();
+  const {  id } = useParams();
 
   const handleSetDelete = (data) => {
     setLinkDelete(data);
