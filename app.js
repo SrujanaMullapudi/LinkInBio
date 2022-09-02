@@ -6,9 +6,11 @@ import helmet from "helmet";
 import mongoose from "mongoose";
 
 import getAllUserActionLinks from "./server/Routes/getLinksRoutes.js";
+import getAllUserSocialLinks from "./server/Routes/getSocialLinksRoutes.js";
 const app = express();
 const PORT = process.env.PORT || 3001;
-const URI = `mongodb+srv://virtualLab:${process.env.DB_PASSWORD}@cluster0.e6bxe.mongodb.net/?retryWrites=true&w=majority`;
+// const URI = `mongodb+srv://virtualLab:${process.env.DB_PASSWORD}@cluster0.e6bxe.mongodb.net/?retryWrites=true&w=majority`;
+const URI = `mongodb+srv://virtualLab:shashank@cluster0.e6bxe.mongodb.net/?retryWrites=true&w=majority`;
 app.use(helmet());
 const corsOptions ={
     origin: "*", 
@@ -21,6 +23,7 @@ app.use(express.json({ limit: "30mb", extended: true }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 
 app.use("/links", getAllUserActionLinks);
+app.use("/socialLinks", getAllUserSocialLinks);
 
 
 mongoose

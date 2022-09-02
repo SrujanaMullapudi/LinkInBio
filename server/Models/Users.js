@@ -16,7 +16,9 @@ const userSchema = new Schema({
         type : Array,
         // required: true
     },
-
+    socialLinks : {
+        type : Array,
+    }
 });
 
 export default mongoose.model('Users',userSchema);
