@@ -10,13 +10,14 @@ import Protected from "./Components/Helpers/Protected";
 import Navbar from "./Components/Navbar";
 import PublicViewing from "./Components/PublicViewing";
 import Edit from "./Components/Edit";
+import LinkPreview from "./Components/LinkPreview";
 
 function App() {
   return (
     <div>
       <AuthContextProvider>
-        <Navbar />
         <Routes>
+          <Route exact path="/" element={<LinkPreview />}></Route>
           <Route
             exact
             path="/public-viewing/:username"
@@ -28,7 +29,9 @@ function App() {
             path="signIn/account/:id"
             element={
               <Protected>
-                <Body />
+                <Navbar>
+                  <Body />
+                </Navbar>
               </Protected>
             }
           ></Route>
@@ -46,15 +49,21 @@ function App() {
             path="/AddLinks/:id"
             element={
               <Protected>
-                <AddLink />
+                <Navbar>
+                  <AddLink />
+                </Navbar>
               </Protected>
             }
           ></Route>
-          <Route exact path="/Edit/:uid/:linkId" element={
-            <Protected>
-              <Edit />
-            </Protected>
-          }></Route>
+          <Route
+            exact
+            path="/Edit/:uid/:linkId"
+            element={
+              <Protected>
+                <Edit />
+              </Protected>
+            }
+          ></Route>
         </Routes>
       </AuthContextProvider>
     </div>

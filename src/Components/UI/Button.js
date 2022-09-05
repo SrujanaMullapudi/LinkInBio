@@ -45,7 +45,6 @@ function Button(props) {
   return (
     <div className="buttonBox">
       <div className="button">
-        <DeleteIcon onClick={handleSetOpen} className="delete" />
         {loader ? (
           <Box
             sx={{
@@ -59,8 +58,10 @@ function Button(props) {
             <button>{props.name}</button>
           </a>
         )}
-
-        <EditIcon  onClick={handleEdit} className="edit" />
+        <div className="buttonActions">
+          <DeleteIcon onClick={handleSetOpen} className="delete" />
+          <EditIcon onClick={handleEdit} className="edit" />
+        </div>
       </div>
       {openDeleteDialog ? (
         <DeleteDialog

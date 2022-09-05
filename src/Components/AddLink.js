@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router";
 import { v4 as uuid } from "uuid";
 import axios from "../axios";
 import { isValidUrl } from "./Helpers/urlChecker";
+import LinkPreview from "./LinkPreview";
 import "../Styles/AddLink.css";
 
 function AddLink() {
@@ -16,6 +17,7 @@ function AddLink() {
     uid: uuid(),
     name: "",
     link: "",
+    imageURL: "",
   });
   const { id } = useParams();
 
@@ -28,7 +30,10 @@ function AddLink() {
     setData({ ...data, link: e.target.value });
     setValidURl(false);
     setValidateInput(false);
+  };
 
+  const imageURL = (previewimagURL) => {
+    setData({ ...data, imageURL: previewimagURL });
   };
 
   const url = `signIn/account/${id}`;
@@ -50,7 +55,7 @@ function AddLink() {
       } else {
         setValidURl(true);
       }
-    }else{
+    } else {
       setValidateInput(true);
     }
   };
@@ -58,36 +63,46 @@ function AddLink() {
   const handleRouterChange = () => {
     navigate(-1);
   };
-  const handleSubmit =  () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     sendData();
   };
   return (
     <div className="AddLink">
       <div className="box">
-        <p id="header">Add Link</p>
-
-        <input
-          required
-          disabled={disable}
-          type="text"
-          placeholder="URL Name"
-          onChange={handleNameInput}
-        />
-        <input
-          required
-          disabled={disable}
-          type="text"
-          placeholder="URL Link"
-          onChange={handleLinkInput}
-        />
-        <button disabled={disable} className="button" onClick={handleSubmit}>
-          Submit
-        </button>
+        <form className="AddLink-form">
+          <div className="AddLink-URL">
+            <label>Enter URL Name</label>
+            <input
+              required
+              disabled={disable}
+              type="text"
+              placeholder="URL Name"
+              onChange={handleNameInput}
+            />
+          </div>
+          <div  className="AddLink-URL">
+            <label>Enter URL Link</label>
+            <input
+              required
+              disabled={disable}
+              type="text"
+              placeholder="URL Link"
+              onChange={handleLinkInput}
+            />
+          </div>
+          <div className="linkPreview">
+            <LinkPreview imageURL={imageURL} urlLink={data.link} />
+          </div>
+          <button disabled={disable} type="submit" className="AddLink-button" onClick={handleSubmit}>
+            Done
+          </button>
+        </form>
       </div>
       <div>
         {validURL ? (
           <Alert
-            sx={{ color: "white", width: "300px" }}
+            sx={{ color: "black", width: "300px" }}
             variant="outlined"
             severity="error"
           >
@@ -96,7 +111,7 @@ function AddLink() {
           </Alert>
         ) : flag !== 0 ? (
           <Alert
-            sx={{ color: "white", width: "300px" }}
+            sx={{ color: "black", width: "300px" }}
             variant="outlined"
             severity="success"
           >
@@ -115,11 +130,11 @@ function AddLink() {
       <div>
         {validateInput ? (
           <Alert
-            sx={{ color: "white", width: "300px" }}
+            sx={{ color: "black", width: "300px" }}
             variant="outlined"
             severity="error"
           >
-            <AlertTitle>Error</AlertTitle>
+            <AlertTitle><b>Error</b></AlertTitle>
             URL Name cannot be empty — <strong>check it out!</strong>
           </Alert>
         ) : (

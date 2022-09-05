@@ -1,17 +1,8 @@
-.navbar{
-    display: flex;
-    background-color: black;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    margin-bottom: 0;
-    color: white;
-}
+
 
 .navbar-logo{
     display: flex;
     align-items: center;
-    justify-content: space-around;
 }
 
 .navbar-logo p{
@@ -19,17 +10,17 @@
     font-weight: bold;
 }
 
-.logout{
+.logout,.logout-drawer{
     display: flex;
     justify-content: center;
     align-items: center;
     font-weight: bold;
 }
-@media screen and (max-widht : 520px) {
+@media screen and (max-width : 520px) {
     .navbar{
         padding: 15px;
     }
     .logout{
-      margin-right:70px;
+        display: none;
     }
 }

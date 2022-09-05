@@ -26,7 +26,7 @@ const fabStyle = {
   },
   "&:hover": {
     backgroundColor: "#CFD2CF",
-    color:"black"
+    color: "black",
   },
 };
 
@@ -70,12 +70,14 @@ function Body(props) {
 
   return (
     <div className="Body">
-      {console.log(user)}
+      {/* {console.log(user)}
       <DisplayPicture imageURL={user.photoURL} />
-      <Footer />
+      <Footer /> */}
 
-      {console.log(links[0])}
       <div className="Body-links">
+        <div className="Body-links-header">
+          <p>{`links (${links[0].links.length})`}</p>
+        </div>
         {links[0].links.map((link) => (
           <div className="Body-button">
             <Button

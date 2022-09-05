@@ -2,64 +2,58 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: black;
-    margin-left: 0;
+
+    color: black;
 }
-#header{
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin: 0;
-}
-.box{
-    height: 50%;
-    width: 100%;
+.AddLink-form{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
-    margin-left: 0;
-    color : white;
-}
-
-.box input{
-    width: 300px;
-    height: 50px;
-    border-radius: 30px;
-    color: white;
-    border: 2px solid white;  
-    background-color: transparent;
-    margin-left: 0;
-    text-align: center;
-    /* padding: 10px; */
-}
-
-.box input::placeholder{
-    color: white;
-    text-align: center;
-}
-
-.box button{
-    width: 300px;
-    height: 50px;
-    margin: 0;
-    font-family: poppins;
-    border-radius: 30px;
+    justify-content: center;
     color: black;
-    border: 2px solid white;   
-    background-color: white;
-    transition: background-color 1s;
+    padding: 20px;
 }
 
-.box button:hover{
-    color: black;
-    background-color: white;
-
+.AddLink-URL{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 360px;
+    height: 96px;
+    margin-bottom: 26px;
 }
 
-@media screen and (max-width : 480px) {
-    .AddLink{
-        height: 823px;
-    }
+.AddLink-URL label{
+    width: auto; /* 127px */
+    height: auto; /* 22px */
+    white-space: pre;
+    font-family: "Inter", sans-serif;
+    color: #000000;
+    font-size: 18px;
+    letter-spacing: 0px;
+    line-height: 1.2;
+    margin-bottom: 10px;
 }
+
+.AddLink-URL input{
+    box-sizing: border-box;
+  width: 360px;
+  height: 48px;
+  overflow: visible;
+  border-radius: 4px;
+  border: 1px solid var(--Card_grey, rgba(133, 133, 133, 0.35));
+  color: black;
+}
+
+.AddLink-URL input::placeholder{
+    color: rgba(133, 133, 133, 0.35);
+}
+
+.AddLink button{
+    width: 240px;
+    height: 48px;
+    border-radius: 8px;
+    background-color: #4473a2;
+}
+
