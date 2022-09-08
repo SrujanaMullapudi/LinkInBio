@@ -6,21 +6,32 @@ import axios from "../axios";
 import { isValidUrl } from "./Helpers/urlChecker";
 import LinkPreview from "./LinkPreview";
 import "../Styles/AddLink.css";
+import { getDefaultExpiryDate } from "./Helpers/DateExpiryHelper";
+import {useAuth} from "../Contexts/AuthContext";
 
-function AddLink() {
+function AddLinkProffessional() {
   const navigate = useNavigate();
+  const {user} = useAuth();
   const [validateInput, setValidateInput] = useState(true);
   const [validURL, setValidURl] = useState(false);
   const [flag, setFlag] = useState(0);
   const [disable, setDisable] = useState(false);
+  const [toggle, setToggle] = useState(true);
+  const [date,setDate] = useState("");
   const [data, setData] = useState({
-    uid: uuid(),
+    id: uuid(),
     name: "",
     link: "",
     imageURL: "",
-    type:"Simple Link"
+    CouponCode: "",
+    OfferType: "",
+    OfferValue: "",
+    CouponCodeExipry: getDefaultExpiryDate(),
+    CouponCriteria: "",
+    type: "Professional Link",
   });
-  const { id } = useParams();
+
+  const {id} = useParams();
 
   const handleNameInput = (e) => {
     setData({ ...data, name: e.target.value });
@@ -36,6 +47,29 @@ function AddLink() {
   const imageURL = (previewimagURL) => {
     setData({ ...data, imageURL: previewimagURL });
   };
+  const handleOfferTypeChange = (e) => {
+    setData({ ...data, OfferType: e.target.value });
+  };
+  const handleOfferValue = (e) => {
+    setData({ ...data, OfferValue: e.target.value });
+  };
+  const handleExpiryChange = (e) =>{
+    console.log("date handleChange")
+    let date = new Date();
+    console.log(e.target.value.toISOString())
+    setData({ ...data, CouponCodeExipry: e.target.value.toISOString() });
+    setDate(e.target.value)
+  }
+
+  const handleCouponCriteria = (e) =>{
+    setData({ ...data, CouponCriteria: e.target.value });
+
+  }
+  const handleCouponCode = (e) =>{
+    setData({ ...data, CouponCode: e.target.value });
+    console.log(data);
+
+  }
 
   const url = `signIn/account/${id}`;
 
@@ -48,6 +82,7 @@ function AddLink() {
           .post(`/links/${id}`, data)
           .then((res) => {
             console.log(res.data);
+            handleRouterChange();
           })
           .catch((err) => {
             console.log(err);
@@ -61,6 +96,7 @@ function AddLink() {
     }
   };
 
+ 
   const handleRouterChange = () => {
     navigate(-1);
   };
@@ -82,7 +118,7 @@ function AddLink() {
               onChange={handleNameInput}
             />
           </div>
-          <div  className="AddLink-URL">
+          <div className="AddLink-URL">
             <label>Enter URL Link</label>
             <input
               required
@@ -95,7 +131,57 @@ function AddLink() {
           <div className="linkPreview">
             <LinkPreview imageURL={imageURL} urlLink={data.link} />
           </div>
-          <button disabled={disable} type="submit" className="AddLink-button" onClick={handleSubmit}>
+          <div className="OfferType">
+            <label>Offer Type</label>
+            <div className="Dropdown">
+              <select
+                onChange={handleOfferTypeChange}
+                value={data.OfferType}
+                placeholder="Select Type"
+              >
+                <option value="Select Type">Select Type</option>
+                <option value="Percentage Discount">Percentage Discount</option>
+                <option value="Flat Discount">Flat Discount</option>
+              </select>
+              <div className="Offer_Value">
+                <input
+                  type="text"
+                  placeholder="Enter Value Here"
+                  onChange={handleOfferValue}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="NormalInputDiv">
+            <label>Coupon Code</label>
+            <input type="text" placeholder="Type Here" onChange={handleCouponCode}/>
+          </div>
+          <div className="Date">
+            <label>Coupon Expiry Date</label>
+            <div className="Date_actions">
+              <div className="Date_actions_input">
+                <input type="date" placeholder="Date"  onChange={handleExpiryChange}/>
+              </div>
+              <div className="Date_actions_checkbox">
+                <label>Default 90 Days</label>
+                <input
+                  type="checkbox"
+                  placeholder="Enter Value Here"
+                  checked={true}
+                  // onChange={handleToggle}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="NormalInputDiv">
+            <label>Coupon Criteria</label>
+            <input type="text" placeholder="Type Here" onChange={handleCouponCriteria}/>
+          </div>
+          <button
+            type="submit"
+            className="AddLink-button"
+            onClick={handleSubmit}
+          >
             Done
           </button>
         </form>
@@ -135,7 +221,9 @@ function AddLink() {
             variant="outlined"
             severity="error"
           >
-            <AlertTitle><b>Error</b></AlertTitle>
+            <AlertTitle>
+              <b>Error</b>
+            </AlertTitle>
             URL Name cannot be empty — <strong>check it out!</strong>
           </Alert>
         ) : (
@@ -146,4 +234,4 @@ function AddLink() {
   );
 }
 
-export default AddLink;
+export default AddLinkProffessional;

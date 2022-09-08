@@ -5,7 +5,7 @@
     justify-content: center;
     color: black;
     border-radius: 5px;
-    box-shadow: 2px 2px rgb(198, 198, 198);
+    border:2px solid rgba(203, 200, 200, 0.35);
 }
 .button{
     padding: 5px;
@@ -15,7 +15,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    align-items: flex-end;
+    align-items: flex-start;
 }
 .button button{
     width: 300px;
@@ -30,26 +30,49 @@
     background-color: transparent;
     transition: background-color 1s;
 }
-.buttonActions{
+.buttonHeader{
+    display: flex;
+    margin: 5px;
+}
+.buttonHeader p{
+    margin: 0 10px;
+    font-weight: bold;
+}
 
+.buttonHeader img{
+    width: 96px;
+    height: 96px;
+}
+.buttonFooter{
+ display: flex;   
+ align-items: center;
+ justify-content: space-between;
+ border-top: 2px dashed rgba(203, 200, 200, 0.35);
+ width: 100%;
+}
+
+.buttonActions{
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-}
-.button button:hover{
-    color: black;
-    background-color: white;
+    justify-content: space-around;
 }
 
-.delete{
+
+.delete, .edit, .openInNew, .Switch{
+    margin: 10px 5px;
+    color: #4473a2;
+}
+
+.linkType{
     margin: 10px;
-    color: #3B9AE1;
 }
 
-.edit{
-    margin: 10px;
-    color: #3B9AE1;
+.CouponCriteria{
+    margin-top: 10px;
+}
 
+.CouponCriteria p{
+    font-weight: unset;
 }
 
 @media screen and (max-width: 480px) {

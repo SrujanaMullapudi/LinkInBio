@@ -11,13 +11,15 @@ import Navbar from "./Components/Navbar";
 import PublicViewing from "./Components/PublicViewing";
 import Edit from "./Components/Edit";
 import LinkPreview from "./Components/LinkPreview";
+import AddLinkProfessional from "./Components/AddLinkProfessional";
+import EditLinkProfessional from "./Components/EditLinkProfessional";
 
 function App() {
   return (
     <div>
       <AuthContextProvider>
         <Routes>
-          <Route exact path="/" element={<LinkPreview />}></Route>
+          {/* <Route exact path="/" element={}></Route> */}
           <Route
             exact
             path="/public-viewing/:username"
@@ -49,8 +51,19 @@ function App() {
             path="/AddLinks/:id"
             element={
               <Protected>
-                <Navbar>
+                <Navbar backIcon={true} pageName={"Add New Link"}>
                   <AddLink />
+                </Navbar>
+              </Protected>
+            }
+          ></Route>
+          <Route
+            exact
+            path="/AddLinksProfessional/:id"
+            element={
+              <Protected>
+                <Navbar backIcon={true} pageName={"Add New Link"}>
+                  <AddLinkProfessional />
                 </Navbar>
               </Protected>
             }
@@ -60,7 +73,20 @@ function App() {
             path="/Edit/:uid/:linkId"
             element={
               <Protected>
-                <Edit />
+                <Navbar backIcon={true} pageName={"Edit Link"}>
+                  <Edit />
+                </Navbar>
+              </Protected>
+            }
+          ></Route>
+          <Route
+            exact
+            path="/EditProfessionalLink/:uid/:linkId"
+            element={
+              <Protected>
+                <Navbar backIcon={true} pageName={"Edit Link"}>
+                  <EditLinkProfessional />
+                </Navbar>
               </Protected>
             }
           ></Route>

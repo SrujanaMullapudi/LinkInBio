@@ -20,6 +20,8 @@ import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import LogoutIcon from "@mui/icons-material/Logout";
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+
 
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
@@ -43,6 +45,9 @@ function DrawerAppBar(props) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+  const handleGoBack = () =>{
+    navigate(-1);
+  }
   const handleLogout = async () => {
     try {
       await logout();
@@ -80,7 +85,7 @@ function DrawerAppBar(props) {
     <Box sx={{ display: "flex" }}>
       <AppBar sx={{backgroundColor: "#4473a2"}}component="nav">
         <Toolbar>
-          <IconButton
+          {!props.backIcon ? <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
@@ -88,7 +93,7 @@ function DrawerAppBar(props) {
             sx={{ mr: 2, display: { sm: "none" } }}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> : <ArrowBackIosIcon onClick={handleGoBack}/>}
           <Typography
             variant="h6"
             component="div"
@@ -100,14 +105,7 @@ function DrawerAppBar(props) {
             </div>
           </Typography>
           <div className="signIn">
-            {user === null ? (
-              <Link to="/signIn">Sign In</Link>
-            ) : (
-              <div className="logout" onClick={handleLogout}>
-                <LogoutIcon id="#logout" />
-                <p>Log Out</p>
-              </div>
-            )}
+            {props.pageName}
           </div>
         </Toolbar>
       </AppBar>

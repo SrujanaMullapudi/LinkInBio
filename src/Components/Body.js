@@ -12,8 +12,9 @@ import DisplayPicture from "./DisplayPicture";
 import "../Styles/Body.css";
 import Footer from "./Footer";
 import { Link } from "react-router-dom";
-import { Fab } from "@mui/material";
+import { Divider, Drawer, Fab } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import { Box } from "@mui/system";
 
 const fabStyle = {
   position: "absolute",
@@ -44,12 +45,18 @@ function Body(props) {
   };
   const [links, setLinks] = useState([{ links: [] }]);
   const [linkDelete, setLinkDelete] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const { id } = useParams();
 
   const handleSetDelete = (data) => {
     setLinkDelete(data);
   };
-
+  const handleDrawerOpen = () => {
+    setDrawerOpen(true);
+  };
+  const handleDrawerClose = () => {
+    setDrawerOpen(false);
+  };
   const getLinks = async () => {
     console.log("in get links");
     const data = await axios.get(`/links/${id}`).then((res) => res.data);
@@ -70,13 +77,12 @@ function Body(props) {
 
   return (
     <div className="Body">
-      {/* {console.log(user)}
-      <DisplayPicture imageURL={user.photoURL} />
-      <Footer /> */}
-
       <div className="Body-links">
         <div className="Body-links-header">
-          <p>{`links (${links[0].links.length})`}</p>
+          <p>{`Links (${links[0].links.length})`}</p>
+          <div className="Body-links-button" onClick={handleDrawerOpen}>
+            <a>Add Link</a>
+          </div>
         </div>
         {links[0].links.map((link) => (
           <div className="Body-button">
@@ -89,27 +95,53 @@ function Body(props) {
               url={link.link}
               onClick={() => routerChange(link.link)}
               name={link.name}
+              type={link.type}
+              imageURL={link.imageURL}
+              CouponCriteria={link.CouponCriteria}
             />
           </div>
         ))}
-      </div>
-
-      {
         <div>
-          {console.log(id)}
-          <div className="Body-addLink">
-            <Fab sx={fabStyle}>
-              <Link to={`/AddLinks/${id}`}>
-                <AddIcon />
-              </Link>
-            </Fab>
-          </div>
-
-          {/* <Button sx={{width : 400 }} type="outlined" href={url}>Add Link</Button> */}
+          <Drawer
+            anchor="bottom"
+            variant="temporary"
+            open={drawerOpen}
+            onClose={handleDrawerClose}
+          >
+            <Box
+              sx={{ width: "auto" }}
+              role="presentation"
+              onClick={handleDrawerClose}
+              onKeyDown={handleDrawerClose}
+            >
+              <div className="Link">
+                <Link to={`/AddLinksProfessional/${id}`}>Add Proffessional Link</Link>
+              </div>
+              <Divider />
+              <div className="Link">
+                <Link to={`/AddLinks/${id}`}>Add Simple Link</Link>
+              </div>
+            </Box>
+          </Drawer>
         </div>
-      }
+      </div>
     </div>
   );
 }
 
 export default Body;
+
+// {
+//   <div>
+//     {console.log(id)}
+//     <div className="Body-addLink">
+//       <Fab sx={fabStyle}>
+//         <Link to={`/AddLinks/${id}`}>
+//           <AddIcon />
+//         </Link>
+//       </Fab>
+//     </div>
+
+//     {/* <Button sx={{width : 400 }} type="outlined" href={url}>Add Link</Button> */}
+//   </div>
+// }

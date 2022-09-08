@@ -28,7 +28,6 @@ function LinkPreview(props) {
   }
   useEffect(() => {
     getPreview();
-    console.log("hi")
   }, [props.urlLink]);
   return (
     <div className="LinkPreview">
