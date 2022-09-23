@@ -4,8 +4,8 @@ import Users from "../Models/Users.js";
 export const postSocialLinks = (req, res) => {
     try {
         const socialLink = {
-            platform: req.body.platform,
-            url: req.body.url,
+            platform : req.body.platform,
+            url : req.body.url,
         };
         Users.find({ userId: req.params.uid }, (err, foundUsers) => {
             if (err) {
@@ -14,7 +14,7 @@ export const postSocialLinks = (req, res) => {
                 if (foundUsers.length == 1) {
                     Users.updateOne(
                         { userId: req.params.uid },
-                        { $push: { socialLinks: socialLink } },
+                        { $set: { [`socialLinks.${socialLink.platform}`] : socialLink.url } },
                         (err, foundUser) => {
                             if (err) {
                                 console.log(err);

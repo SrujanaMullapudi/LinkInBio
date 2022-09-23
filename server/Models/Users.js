@@ -17,7 +17,7 @@ const userSchema = new Schema({
         // required: true
     },
     socialLinks : {
-        type : Array,
+        type : Object,
     }
 });
 
