@@ -38,7 +38,7 @@ function CreateLink() {
     if (data.name.length !== 0) {
       console.log(data);
       const apiData = await axios
-        .post("/links/checkusername", data)
+        .post("/links/newProfile/create", data)
         .then((res) => res.data);
         console.log(apiData)
       if (apiData.message === "username already present") {

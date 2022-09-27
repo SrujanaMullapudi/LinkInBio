@@ -15,6 +15,7 @@ export const useAuth = () => {
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
+  const [loading, setLoading] = useState(true);
   const signInWithGoogle = () => {
     var provider = new GoogleAuthProvider();
     signInWithPopup(authenticate, provider);
@@ -27,6 +28,7 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(authenticate, (currentUser) => {
       setUser(currentUser);
+      setLoading(false)
       console.log("user", currentUser);
     });
     return () => {
@@ -36,7 +38,7 @@ export const AuthContextProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{ signInWithGoogle, logout, user }}>
-      {children}
+      {!loading && children}
     </AuthContext.Provider>
   );
 };

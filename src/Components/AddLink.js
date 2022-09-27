@@ -7,7 +7,7 @@ import { isValidUrl } from "./Helpers/urlChecker";
 import LinkPreview from "./LinkPreview";
 import "../Styles/AddLink.css";
 
-function AddLink() {
+function AddLink(props) {
   const navigate = useNavigate();
   const [validateInput, setValidateInput] = useState(true);
   const [validURL, setValidURl] = useState(false);
@@ -18,9 +18,9 @@ function AddLink() {
     name: "",
     link: "",
     imageURL: "",
-    type:"Simple Link"
+    type: "Simple Link",
   });
-  const { id } = useParams();
+  const { id, collectionName } = useParams();
 
   const handleNameInput = (e) => {
     setData({ ...data, name: e.target.value });
@@ -42,10 +42,26 @@ function AddLink() {
   const sendData = async () => {
     if (data.name.length > 0) {
       console.log(data);
-      if (isValidUrl(data.link)) {
+      if (isValidUrl(data.link) && props.collection === false) {
         setFlag(1);
         const promise_data = await axios
           .post(`/links/${id}`, data)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        setDisable(true);
+      } else if (isValidUrl(data.link) && props.collection === true) {
+        const config = {
+          headers: {
+            userId: id,
+          },
+        };
+        setFlag(1);
+        const promise_data = await axios
+          .post(`/collections/addLink/${collectionName}`, data, config)
           .then((res) => {
             console.log(res.data);
           })
@@ -82,7 +98,7 @@ function AddLink() {
               onChange={handleNameInput}
             />
           </div>
-          <div  className="AddLink-URL">
+          <div className="AddLink-URL">
             <label>Enter URL Link</label>
             <input
               required
@@ -95,7 +111,12 @@ function AddLink() {
           <div className="linkPreview">
             <LinkPreview imageURL={imageURL} urlLink={data.link} />
           </div>
-          <button disabled={disable} type="submit" className="AddLink-button" onClick={handleSubmit}>
+          <button
+            disabled={disable}
+            type="submit"
+            className="AddLink-button"
+            onClick={handleSubmit}
+          >
             Done
           </button>
         </form>
@@ -135,7 +156,9 @@ function AddLink() {
             variant="outlined"
             severity="error"
           >
-            <AlertTitle><b>Error</b></AlertTitle>
+            <AlertTitle>
+              <b>Error</b>
+            </AlertTitle>
             URL Name cannot be empty — <strong>check it out!</strong>
           </Alert>
         ) : (

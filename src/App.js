@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router";
 
 import "./Styles/App.css";
-import Body from "./Components/Body";
+import Dashboard from "./Components/Dashboard";
 import CreateLink from "./Components/CreateLink";
 import AddLink from "./Components/AddLink";
 import SignIn from "./Components/SignIn";
@@ -13,8 +13,11 @@ import Edit from "./Components/Edit";
 import LinkPreview from "./Components/LinkPreview";
 import AddLinkProfessional from "./Components/AddLinkProfessional";
 import EditLinkProfessional from "./Components/EditLinkProfessional";
+import AddNewCollections from "./Pages/AddNewCollections";
+import CollectionPage from "./Pages/CollectionPage";
 
-function App() {
+function App(props) {
+  console.log(props);
   return (
     <div>
       <AuthContextProvider>
@@ -31,8 +34,8 @@ function App() {
             path="signIn/account/:id"
             element={
               <Protected>
-                <Navbar>
-                  <Body />
+                <Navbar pageName={"Dashboard"}>
+                  <Dashboard />
                 </Navbar>
               </Protected>
             }
@@ -51,8 +54,27 @@ function App() {
             path="/AddLinks/:id"
             element={
               <Protected>
-                <Navbar backIcon={true} pageName={"Add New Link"}>
-                  <AddLink />
+                <Navbar
+                  backIcon={true}
+                  isCollection={false}
+                  pageName={"Add New Link"}
+                >
+                  <AddLink collection={false}/>
+                </Navbar>
+              </Protected>
+            }
+          ></Route>
+                    <Route
+            exact
+            path="/AddLinks/:collectionName/:id"
+            element={
+              <Protected>
+                <Navbar
+                  backIcon={true}
+                  isCollection={false}
+                  pageName={"Add New Link"}
+                >
+                  <AddLink collection={true}/>
                 </Navbar>
               </Protected>
             }
@@ -62,8 +84,27 @@ function App() {
             path="/AddLinksProfessional/:id"
             element={
               <Protected>
-                <Navbar backIcon={true} pageName={"Add New Link"}>
-                  <AddLinkProfessional />
+                <Navbar
+                  backIcon={true}
+                  isCollection={false}
+                  pageName={"Add New Link"}
+                >
+                  <AddLinkProfessional collection={false}/>
+                </Navbar>
+              </Protected>
+            }
+          ></Route>
+          <Route
+            exact
+            path="/AddLinksProfessional/:collectionName/:id"
+            element={
+              <Protected>
+                <Navbar
+                  backIcon={true}
+                  isCollection={false}
+                  pageName={"Add New Link"}
+                >
+                  <AddLinkProfessional collection={true}/>
                 </Navbar>
               </Protected>
             }
@@ -73,7 +114,11 @@ function App() {
             path="/Edit/:uid/:linkId"
             element={
               <Protected>
-                <Navbar backIcon={true} pageName={"Edit Link"}>
+                <Navbar
+                  backIcon={true}
+                  isCollection={false}
+                  pageName={"Edit Link"}
+                >
                   <Edit />
                 </Navbar>
               </Protected>
@@ -84,12 +129,38 @@ function App() {
             path="/EditProfessionalLink/:uid/:linkId"
             element={
               <Protected>
-                <Navbar backIcon={true} pageName={"Edit Link"}>
+                <Navbar
+                  backIcon={true}
+                  isCollection={false}
+                  pageName={"Edit Link"}
+                >
                   <EditLinkProfessional />
                 </Navbar>
               </Protected>
             }
           ></Route>
+        </Routes>
+        <Routes>
+          <Route
+            path="/collections/addNew"
+            element={
+              <Navbar
+                backIcon={true}
+                isCollection={false}
+                pageName={"Add New Collection"}
+              >
+                <AddNewCollections />{" "}
+              </Navbar>
+            }
+          />
+          <Route
+            path="/collections/:username/:collectionName"
+            element={
+              <Navbar backIcon={true} isCollection={true} pageName={""}>
+                <CollectionPage />{" "}
+              </Navbar>
+            }
+          />
         </Routes>
       </AuthContextProvider>
     </div>

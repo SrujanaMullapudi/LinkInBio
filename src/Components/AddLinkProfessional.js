@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { v4 as uuid } from "uuid";
 import axios from "../axios";
-import { isValidUrl } from "./Helpers/urlChecker";
-import LinkPreview from "./LinkPreview";
+import { isValidUrl } from "../Components/Helpers/urlChecker";
+import LinkPreview from "../Components/LinkPreview";
 import "../Styles/AddLink.css";
-import { getDefaultExpiryDate } from "./Helpers/DateExpiryHelper";
+import { getDefaultExpiryDate } from "../Components/Helpers/DateExpiryHelper";
 import {useAuth} from "../Contexts/AuthContext";
 
 function AddLinkProffessional() {

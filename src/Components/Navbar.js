@@ -20,8 +20,7 @@ import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import LogoutIcon from "@mui/icons-material/Logout";
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
@@ -32,7 +31,7 @@ import { useNavigate, useParams } from "react-router";
 import { useAuth } from "../Contexts/AuthContext";
 import "../Styles/Navbar.css";
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 const navItems = ["Home", "About", "Contact"];
 
 function DrawerAppBar(props) {
@@ -45,9 +44,9 @@ function DrawerAppBar(props) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  const handleGoBack = () =>{
+  const handleGoBack = () => {
     navigate(-1);
-  }
+  };
   const handleLogout = async () => {
     try {
       await logout();
@@ -57,7 +56,7 @@ function DrawerAppBar(props) {
     }
   };
   const drawer = (
-    <Box onClick={handleDrawerToggle} >
+    <Box onClick={handleDrawerToggle}>
       <Typography variant="h6" sx={{ my: 2 }}>
         <div className="navbar-logo">
           <AccountTreeIcon fontSize="large" />
@@ -80,20 +79,26 @@ function DrawerAppBar(props) {
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
-
+  const { collectionName } = useParams();
   return (
     <Box sx={{ display: "flex" }}>
-      <AppBar sx={{backgroundColor: "#4473a2"}}component="nav">
+      <AppBar sx={{ backgroundColor: "#4473a2" }} component="nav">
         <Toolbar>
-          {!props.backIcon ? <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
-          >
-            <MenuIcon />
-          </IconButton> : <ArrowBackIosIcon onClick={handleGoBack}/>}
+          {!props.backIcon ? (
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { sm: "none" } }}
+            >
+              <MenuIcon />
+            </IconButton>
+          ) : (
+            <div className="backIcon">
+              <ArrowBackIosIcon onClick={handleGoBack} />
+            </div>
+          )}
           <Typography
             variant="h6"
             component="div"
@@ -104,9 +109,11 @@ function DrawerAppBar(props) {
               <p>LinkTree</p>
             </div>
           </Typography>
-          <div className="signIn">
-            {props.pageName}
-          </div>
+          {props.isCollection ? (
+            <div className="pageName">{collectionName}</div>
+          ) : (
+            <div className="pageName">{props.pageName}</div>
+          )}
         </Toolbar>
       </AppBar>
       <Box component="nav">
@@ -129,7 +136,7 @@ function DrawerAppBar(props) {
           {drawer}
         </Drawer>
       </Box>
-      <Box component="main" sx={{width:"100%"}}>
+      <Box component="main" sx={{ width: "100%" }}>
         <Toolbar />
         {props.children}
       </Box>

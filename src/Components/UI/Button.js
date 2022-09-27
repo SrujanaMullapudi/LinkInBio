@@ -1,6 +1,6 @@
 import React from "react";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import "../../Styles/Button.css";
 import { useState } from "react";
 import DeleteDialog from "./DeleteDialog";
@@ -93,8 +93,8 @@ function Button(props) {
             </b>
           </div>
           <div className="buttonActions">
-            <DeleteIcon onClick={()=>handleSetOpen(props.type)} className="delete" />
-            <EditIcon onClick={()=>handleEdit(props.type)} className="edit" />
+            <DeleteOutlinedIcon onClick={()=>handleSetOpen(props.type)} className="delete" />
+            <EditOutlinedIcon onClick={()=>handleEdit(props.type)} className="edit" />
             <ThemeProvider theme={theme}>
               <Switch color="siteDefault" className="Switch" />
             </ThemeProvider>

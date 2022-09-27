@@ -7,6 +7,8 @@ import axios from "../axios";
 import firebase from "firebase/compat/app";
 import { useAuth } from "../Contexts/AuthContext";
 
+import Collections from "./Collections";
+
 import Button from "./UI/Button";
 import DisplayPicture from "./DisplayPicture";
 import "../Styles/Body.css";
@@ -15,6 +17,7 @@ import { Link } from "react-router-dom";
 import { Divider, Drawer, Fab } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { Box } from "@mui/system";
+import { faDashboard } from "@fortawesome/free-solid-svg-icons";
 
 const fabStyle = {
   position: "absolute",
@@ -35,7 +38,7 @@ const addStyle = {
   color: "black",
 };
 
-function Body(props) {
+function Dashboard(props) {
   const { user } = useAuth();
 
   let navigate = useNavigate();
@@ -43,7 +46,7 @@ function Body(props) {
     let path = link;
     navigate(path);
   };
-  const [links, setLinks] = useState([{ links: [] }]);
+  const [links, setLinks] = useState([{ links: [], collections:[] }]);
   const [linkDelete, setLinkDelete] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { id } = useParams();
@@ -77,6 +80,10 @@ function Body(props) {
 
   return (
     <div className="Body">
+    <div className="Collections">
+
+      <Collections data={links} />
+    </div>
       <div className="Body-links">
         <div className="Body-links-header">
           <p>{`Links (${links[0].links.length})`}</p>
@@ -129,7 +136,7 @@ function Body(props) {
   );
 }
 
-export default Body;
+export default Dashboard;
 
 // {
 //   <div>

@@ -20,5 +20,12 @@
     .navbar{
         padding: 15px;
     }
+    .backIcon{
+        padding: 8px;
+        margin-right: 16px;
+    }
+    .pageName{
+
+    }
     
 }

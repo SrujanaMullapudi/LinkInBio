@@ -194,3 +194,41 @@
 .NormalInputDiv input::placeholder{
     color:  rgba(110, 110, 110, 0.35);
 }
+
+
+.imageUpladInput{
+    width: 360px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+}
+
+#lable{
+    font-size: 18px;
+}
+.AddLink-Collection{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-bottom: 26px;
+}
+.AddLink-Collection input{
+    display: none;
+}
+
+.AddLink-Collection label{
+    margin-top: 10px;
+}
+.linkPreview{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.linkPreview img{
+    width: 96px;
+    height: 96px;
+}
+
+.linkPreview button{
+    margin-left: 20px;
+}
