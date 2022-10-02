@@ -74,6 +74,7 @@ export const getLinks = (req, res) => {
 };
 
 export const checkUsernameAvailable = (req, res) => {
+  console.log(req.body);
   try {
     const name = req.body.name;
     const id = req.body.uid;
@@ -90,6 +91,7 @@ export const checkUsernameAvailable = (req, res) => {
             userName: name,
             photoURL,
             links: [],
+            collections:[]
           });
           user.save();
           res.status(200).json({ message: "Tree Created Succesfully" });

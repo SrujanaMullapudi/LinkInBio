@@ -7,7 +7,7 @@ router.post('/:uid',postLinks);
 router.get('/Edit/:uid/:linkId',getEditLink);
 router.post('/Edit/:uid/:linkId',editLink)
 router.get('/public/:username',publicViewing) // /links/public/:username
-router.post('/checkusername',checkUsernameAvailable);
+router.post('/newProfile/create',checkUsernameAvailable);
 router.post('/deleteLink/:uid/:idx',deleteLink);
 
 
