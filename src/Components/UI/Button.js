@@ -35,6 +35,7 @@ function Button(props) {
   const handleEditSetOpen = (data) => {
     setOpenEditDialog(data);
   };
+
   const handleDelete = async (data) => {
     if (data) {
       setLoader(true);
@@ -48,6 +49,7 @@ function Button(props) {
       setLoader(false);
     }
   };
+  
   const handleEdit = (type) => {
     if(type === "Simple Link"){
       navigate(`/Edit/${props.user.uid}/${props.idx}`);

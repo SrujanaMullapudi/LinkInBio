@@ -1,20 +1,99 @@
 
 
-.navbar-logo{
+.sidebar{
+    height: 850px;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
+.sidebar-userContent{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sidebar-userContent img{
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    margin: 0 20px;
+}
+
+.sidebar-userContent button{
+    margin: 0 20px;
+    width: 100px;
+    height: 40px;
+    background-color: var(--Card_grey, rgba(144, 144, 144, 0.35));
+    overflow: visible;
+    border-radius: 4px;
+    font-size: 14px;
+    border: none;
+}
+
+
+.sidebar-userContent-usenameAndBio{
+    margin: 0 20px;
+}
+.sidebar-userContent-usenameAndBio p{
+    margin: 5px 0;
+    font-weight: bold;
+}
+
+.sidebar-userContent-navItems{
+    margin: 30px 0 0 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sidebar-userContent-navItems a{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+  letter-spacing: 0px;
+  margin-top: 15px;
+}
 .navbar-logo p{
     margin: 10px;
     font-weight: bold;
 }
 
+.sharableLink{
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sharableLink p{
+    white-space: pre;
+  font-weight: 600;
+  font-family: "Inter-SemiBold", "Inter", sans-serif;
+  color: var(--White, #ffffff);
+  font-size: 14px;
+  letter-spacing: 0px;
+  line-height: 1.2;
+}
+
+.icons{
+    width: 70px;
+    margin: 0px 20px;
+    display: flex;
+}
+.openIcon{
+    margin: 0 13px;
+}
 .logout,.logout-drawer{
     display: flex;
     justify-content: center;
     align-items: center;
     font-weight: bold;
+    color: white;
+    background-color: #4473a2;
+    margin: 20px 10px;
+    border-radius: 10px;
 }
 @media screen and (max-width : 520px) {
     .navbar{

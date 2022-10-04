@@ -12,7 +12,7 @@ function Collections(props) {
       <div className="CollectionsHeader">
         <div>{`Collections(${props.data[0].collections.length})`}</div>
         <div className="CollectionsViewAllButton">
-          <button>View All</button>
+          <Link to="/viewAllCollections">View All</Link>
         </div>
         <div className="CollectionsAddNew">
           <Link to="/collections/addNew">
@@ -23,7 +23,7 @@ function Collections(props) {
       <div className="CollectionBox">
         {collectionsNew.map((collection) => (
           <Link to={`/collections/${username}/${collection.collectionName}`}>
-            <div className="Collection">
+            <div key={collection.name} className="Collection">
               <div className="linkLength">
                 <p>{collection.links.length}</p>
               </div>

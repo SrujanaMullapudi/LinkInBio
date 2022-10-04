@@ -81,7 +81,6 @@ function Dashboard(props) {
   return (
     <div className="Body">
     <div className="Collections">
-
       <Collections data={links} />
     </div>
       <div className="Body-links">

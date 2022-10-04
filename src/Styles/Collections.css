@@ -29,7 +29,7 @@
 
 }
 
-.CollectionsViewAllButton button{
+.CollectionsViewAllButton a{
     width: 86px;
     height: 28px;
     border: none;

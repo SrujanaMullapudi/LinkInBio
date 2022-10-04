@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { Divider, Drawer, Fab } from "@mui/material";
 import { Box } from "@mui/system";
-
+import Button from "../Components/UI/Button";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import "../Styles/CollectionPage.css";
 import { useAuth } from "../Contexts/AuthContext";
@@ -12,7 +12,18 @@ import axios from "../axios";
 function CollectionPage(props) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [collection, setCollection] = useState(null);
+  const [linkDelete, setLinkDelete] = useState(false);
   const { collectionName } = useParams();
+
+  const handleSetDelete = (data) => {
+    setLinkDelete(data);
+  };
+
+  let navigate = useNavigate();
+  const routerChange = (link) => {
+    let path = link;
+    navigate(path);
+  };
 
   const { user } = useAuth();
   const handleDrawerOpen = () => {
@@ -25,9 +36,11 @@ function CollectionPage(props) {
   const getLinks = async () => {
     const data = await axios
       .get(`links/${user.uid}`)
-      .then((res) => res.data[0].collections.filter(curr =>(
-        curr.collectionName === collectionName
-      )));
+      .then((res) =>
+        res.data[0].collections.filter(
+          (curr) => curr.collectionName === collectionName
+        )
+      );
 
     console.log(data);
 
@@ -50,7 +63,24 @@ function CollectionPage(props) {
           <a>Add Link</a>
         </div>
       </div>
-      <div>{collection && collection.links.length}</div>
+      <div className="collectionBody">
+        {collection && collection.links.map((link) => (
+          <Button
+            key={link.id}
+            idx={link.id}
+            delete={linkDelete}
+            handleSetDelete={handleSetDelete}
+            user={user}
+            url={link.link}
+            onClick={() => routerChange(link.link)}
+            name={link.name}
+            type={link.type}
+            imageURL={link.imageURL}
+            CouponCriteria={link.CouponCriteria}
+            isCollection={true}
+          />
+        ))}
+      </div>
       <Drawer
         anchor="bottom"
         variant="temporary"

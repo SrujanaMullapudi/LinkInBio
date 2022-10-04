@@ -1,16 +1,3 @@
-// import React, { useEffect } from "react";
-
-// import AuthGoogle from "../Utils/AuthGoogle";
-
-// import { AppBar } from "@mui/material";
-
-// function Navbar() {
-//     console.log("navbar");
-
-// return (
-// <div className="navbar">
-
-// </div>
 import * as React from "react";
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
@@ -21,26 +8,27 @@ import IconButton from "@mui/material/IconButton";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import LogoutIcon from "@mui/icons-material/Logout";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import { useNavigate, useParams } from "react-router";
 import { useAuth } from "../Contexts/AuthContext";
+import { useUser } from "../Contexts/userContext";
+import face from "../Photos/face.jpg";
 import "../Styles/Navbar.css";
 
 const drawerWidth = 300;
-const navItems = ["Home", "About", "Contact"];
 
 function DrawerAppBar(props) {
   const { logout, user } = useAuth();
+  const { data } = useUser();
   const navigate = useNavigate();
-  const { username } = useParams();
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -55,26 +43,49 @@ function DrawerAppBar(props) {
       console.log(error);
     }
   };
-  const drawer = (
-    <Box onClick={handleDrawerToggle}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        <div className="navbar-logo">
-          <AccountTreeIcon fontSize="large" />
-          <p>LinkTree</p>
-        </div>
-      </Typography>
-      <Divider />
-      <div className="signIn">
-        {user === null ? (
-          <Link to="/signIn">Sign In</Link>
-        ) : (
-          <div className="logout-drawer" onClick={handleLogout}>
-            <LogoutIcon id="#logout" />
-            <p>Log Out</p>
+
+  const navItems = ["Dashboard", "Social Links", "Appearance", "Settings"];
+
+  console.log(data);
+
+  const drawer = data && (
+    <div>
+      <Box className="sidebar" onClick={handleDrawerToggle}>
+        <Typography variant="h6" sx={{ my: 2 }}>
+          <div>
+            <div className="sidebar-userContent">
+              <img src={face} alt="" />
+              <div>
+                <button>Edit Profile</button>
+              </div>
+            </div>
+            <div className="sidebar-userContent-usenameAndBio">
+              <p>{data[0].userName}</p>
+              <p>{"This is my bio"}</p>
+            </div>
+            <Divider />
+            <div className="sidebar-userContent-navItems">
+              {navItems.map((item) => (
+
+                <Link to={`/signIn/account/${data[0].userId}/${item === "Dashboard"? ``: item}`}>{item}</Link>
+              ))}
+            </div>
           </div>
-        )}
-      </div>
-    </Box>
+        </Typography>
+        <div className="signIn">
+          {user === null ? (
+            <Link to="/signIn">Sign In</Link>
+          ) : (
+            <div>
+              <div className="logout-drawer" onClick={handleLogout}>
+                <LogoutIcon id="#logout" />
+                <p>Log Out</p>
+              </div>
+            </div>
+          )}
+        </div>
+      </Box>
+    </div>
   );
 
   const container =
@@ -115,6 +126,21 @@ function DrawerAppBar(props) {
             <div className="pageName">{props.pageName}</div>
           )}
         </Toolbar>
+        {props.pageName === "Dashboard" ? (
+          <div className="sharableLink">
+            <p>{`www.linkinbio.com/${data[0].userName}`}</p>
+            <div className="icons">
+              <div className="openIcon">
+                <OpenInNewIcon />
+              </div>
+              <div className="closeIcon">
+                <ShareOutlinedIcon />
+              </div>
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
       </AppBar>
       <Box component="nav">
         <Drawer
