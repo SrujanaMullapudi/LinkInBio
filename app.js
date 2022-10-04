@@ -6,7 +6,11 @@ import helmet from "helmet";
 import mongoose from "mongoose";
 
 import getAllUserActionLinks from "./server/Routes/getLinksRoutes.js";
+
+import getAllUserSocialLinks from "./server/Routes/getSocialLinksRoutes.js";
+
 import Collections  from "./server/Routes/collectionRoutes.js";
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 const URI = `mongodb+srv://virtualLab:${process.env.DB_PASSWORD}@cluster0.e6bxe.mongodb.net/?retryWrites=true&w=majority`;
@@ -22,7 +26,11 @@ app.use(express.json({ limit: "30mb", extended: true }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 
 app.use("/links", getAllUserActionLinks);
+
+app.use("/socialLinks", getAllUserSocialLinks);
+
 app.use("/collections",Collections);
+
 
 mongoose
   .connect(URI, { useNewUrlParser: true })
@@ -49,6 +57,7 @@ app.get("/", async (req, res) => {
     });
   }
 });
+
 app.listen(PORT, () => {
   if (process.env.NODE_ENV == "production") {
   } else {

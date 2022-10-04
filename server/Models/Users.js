@@ -16,6 +16,9 @@ const userSchema = new Schema({
         type : Array,
         // required: true
     },
+    socialLinks : {
+        type : Object,
+    },
     collections:{
         type:Array
     }
