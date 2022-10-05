@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { Navigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 import axios from "../axios";
 import { useAuth } from "./AuthContext";
 
@@ -11,8 +11,9 @@ export const useUser = () => {
 
 export const UserContextProvider = ({ children }) => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   console.log(user);
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
 
   const getUser = async () => {
     console.log("in get links");
@@ -20,6 +21,10 @@ export const UserContextProvider = ({ children }) => {
     console.log(data, "user");
     setData(data);
   };
+
+  // if(data.length === 0){
+  //     navigate("/createLink");
+  // }
 
   useEffect(() => {
     getUser();
@@ -29,7 +34,7 @@ export const UserContextProvider = ({ children }) => {
 
   return (
     <UserContext.Provider value={{ data }}>
-      {data && children}
+      {children}
     </UserContext.Provider>
   );
 };

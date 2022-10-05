@@ -24,16 +24,14 @@ function App(props) {
     <div>
       <AuthContextProvider>
         <Routes>
-          <Route path="/:username" element={<Public />}></Route>
+          {/* <Route path="/:username" element={<Public />}></Route> */}
           <Route exact path="/signIn" element={<SignIn />}></Route>
         </Routes>
-
         <UserContextProvider>
           <Routes>
             {/* <Route exact path="/" element={}></Route> */}
             <Route
-              exact
-              path="/signIn/account/:id"
+              path="/signIn/account/:id/"
               element={
                 <Protected>
                   <Navbar pageName={"Dashboard"}>

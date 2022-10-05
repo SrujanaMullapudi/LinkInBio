@@ -19,7 +19,7 @@ function AuthGoogle() {
   };
   useEffect(() => {
     if (user !== null) {
-      navigate(`account/${user.uid}`);
+      navigate(`account/${user.uid}/`);
     }
   }, [user]);
   
