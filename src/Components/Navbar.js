@@ -59,7 +59,7 @@ function DrawerAppBar(props) {
         <Typography variant="h6" sx={{ my: 2 }}>
           <div>
             <div className="sidebar-userContent">
-              <img src={data[0].photoURL} alt="" />
+              <img src={data.length>0 ? data[0].photoURL : ""} alt="" />
               <div>
                 <button>Edit Profile</button>
               </div>
