@@ -16,20 +16,24 @@ import CollectionPage from "./Pages/CollectionPage";
 import ViewAllCollections from "./Pages/ViewAllCollections";
 import Public from "./Pages/Public";
 import { UserContextProvider } from "./Contexts/userContext";
+import SocialLinks from "./Pages/SocialLinks";
 
 function App(props) {
   console.log(props);
   return (
     <div>
       <AuthContextProvider>
+        <Routes>
+          <Route path="/:username" element={<Public />}></Route>
+          <Route exact path="/signIn" element={<SignIn />}></Route>
+        </Routes>
+
         <UserContextProvider>
           <Routes>
             {/* <Route exact path="/" element={}></Route> */}
-            <Route exact path="/:username" element={<Public />}></Route>
-            <Route exact path="/signIn" element={<SignIn />}></Route>
             <Route
               exact
-              path="signIn/account/:id"
+              path="/signIn/account/:id"
               element={
                 <Protected>
                   <Navbar pageName={"Dashboard"}>
@@ -38,6 +42,17 @@ function App(props) {
                 </Protected>
               }
             ></Route>
+            <Route
+              path="/signIn/account/:id/Socials"
+              element={
+                <Protected>
+                  <Navbar pageName={"Social Links"}>
+                    <SocialLinks />
+                  </Navbar>
+                </Protected>
+              }
+            ></Route>
+
             <Route
               exact
               path="/createLink"

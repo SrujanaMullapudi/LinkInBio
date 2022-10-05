@@ -58,7 +58,7 @@ function CollectionPage(props) {
         <EditOutlinedIcon sx={{ color: "#4473a2" }} />
       </div>
       <div className="CollectionPage_body">
-        <p>{`Links(${12})`}</p>
+        <p>{`Links(${collection && collection.links.length})`}</p>
         <div className="Body-links-button" onClick={handleDrawerOpen}>
           <a>Add Link</a>
         </div>

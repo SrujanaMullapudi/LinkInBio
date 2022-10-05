@@ -38,15 +38,20 @@ function DrawerAppBar(props) {
   const handleLogout = async () => {
     try {
       await logout();
-      navigate("/signin");
+      navigate("/signIn");
     } catch (error) {
       console.log(error);
     }
   };
 
-  const navItems = ["Dashboard", "Social Links", "Appearance", "Settings"];
+  const navItems = ["Dashboard", "Socials", "Appearance", "Settings"];
 
   console.log(data);
+
+  if (data.length === 0) {
+    console.log(data.length);
+    navigate("/createLink");
+  }
 
   const drawer = data && (
     <div>
@@ -54,20 +59,25 @@ function DrawerAppBar(props) {
         <Typography variant="h6" sx={{ my: 2 }}>
           <div>
             <div className="sidebar-userContent">
-              <img src={face} alt="" />
+              <img src={data[0].photoURL} alt="" />
               <div>
                 <button>Edit Profile</button>
               </div>
             </div>
             <div className="sidebar-userContent-usenameAndBio">
-              <p>{data[0].userName}</p>
+              <p>{data.length > 0 ? data[0].userName : ""}</p>
               <p>{"This is my bio"}</p>
             </div>
             <Divider />
             <div className="sidebar-userContent-navItems">
               {navItems.map((item) => (
-
-                <Link to={`/signIn/account/${data[0].userId}/${item === "Dashboard"? ``: item}`}>{item}</Link>
+                <Link
+                  to={`/signIn/account/${
+                    data.length > 0 ? data[0].userId : ""
+                  }/${item === "Dashboard" ? `` : item}`}
+                >
+                  {item}
+                </Link>
               ))}
             </div>
           </div>
@@ -128,7 +138,9 @@ function DrawerAppBar(props) {
         </Toolbar>
         {props.pageName === "Dashboard" ? (
           <div className="sharableLink">
-            <p>{`www.linkinbio.com/${data[0].userName}`}</p>
+            <p>
+              {data.length > 0 ? `www.linkinbio.com/${data[0].userName}` : ""}
+            </p>
             <div className="icons">
               <div className="openIcon">
                 <OpenInNewIcon />
