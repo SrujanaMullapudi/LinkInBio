@@ -1,109 +1,175 @@
-import { CircularProgress } from "@mui/material";
 import { Alert, AlertTitle } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
+import { v4 as uuid } from "uuid";
 import axios from "../axios";
-import "../Styles/AddLink.css";
 import { isValidUrl } from "./Helpers/urlChecker";
+import LinkPreview from "./LinkPreview";
+import "../Styles/AddLink.css";
+
 function Edit() {
-  const [linkData, setLinkData] = useState({ name: "", URL: "" });
-  const [success, setSuccess] = useState(false);
-  const [validURL, setValidURL] = useState(undefined);
-  const [name, setName] = useState("");
-  const [URL, setURL] = useState("");
-  const [loading, setLoading] = useState(false);
-  const { uid, linkId } = useParams();
   const navigate = useNavigate();
+  const [validateInput, setValidateInput] = useState(true);
+  const [validURL, setValidURl] = useState(false);
+  const [flag, setFlag] = useState(0);
+  const [disable, setDisable] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [isEditTrue, setIsEditTrue] = useState(true);
+  const [data, setData] = useState({
+    uid: uuid(),
+    name: "",
+    link: "",
+    imageURL: "",
+    type: "Simple Link",
+  });
+  const { uid, linkId } = useParams();
 
-  const getLinkData = async () => {
-    setLoading(true);
-    const data = await axios
-      .get(`links/Edit/${uid}/${linkId}`)
-      .then((res) => res.data)
-      .catch((error) => console.log(error));
-    setLinkData(data);
-    setName(data[0].name);
-    setURL(data[0].link);
-    setLoading(false);
+  const handleNameInput = (e) => {
+    setData({ ...data, name: e.target.value });
+    setValidURl(false);
+    setValidateInput(false);
+  };
+  const handleLinkInput = (e) => {
+    setData({ ...data, link: e.target.value });
+    setValidURl(false);
+    setValidateInput(false);
   };
 
-  const handleNameChange = (e) => {
-    setValidURL(false);
-    setSuccess(false);
-    setName(e.target.value);
-    setLinkData({ name: e.target.value });
+  const imageURL = (previewimagURL) => {
+    setData({ ...data, imageURL: previewimagURL });
   };
-  const handleURLChange = (e) => {
-    setValidURL(false);
-    setSuccess(false);
-    setURL(e.target.value);
-    setLinkData({...linkData, URL: e.target.value });
-  };
-  const handleEditSubmit = async () => {
-    console.log(linkData);
-    if (URL !== undefined) {
-      if (isValidUrl(URL)) {
-        const data = await axios
-          .post(`links/Edit/${uid}/${linkId}`, linkData)
-          .then((res) => res.data);
-        setSuccess(true);
+
+  const sendData = async () => {
+    if (data.name.length > 0) {
+      console.log(data);
+      if (isValidUrl(data.link)) {
+        setFlag(1);
+        const promise_data = await axios
+          .post(`links/Edit/${uid}/${linkId}`, data)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        setDisable(true);
       } else {
-        setURL("");
-        setName("");
-        setValidURL(true);
+        setValidURl(true);
       }
-    } else if (URL === undefined) {
-      const data = await axios
-        .post(`links/Edit/${uid}/${linkId}`, linkData)
-        .then((res) => res.data);
+    } else {
+      setValidateInput(true);
     }
   };
-  const handleGoBack = () => {
+
+  const handleRouterChange = () => {
     navigate(-1);
   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    sendData();
+  };
+  const getLinkData = async () => {
+    setLoading(true);
+    const res_data = await axios
+      .get(`links/Edit/${uid}/${linkId}`)
+      .then((res) => {
+        setLoading(false);
+        return res.data;
+      })
+      .catch((error) => console.log(error));
 
+    setData(res_data[0]);
+    console.log(data);
+  };
   useEffect(() => {
     getLinkData();
-    setValidURL(false);
   }, []);
   return (
     <div className="AddLink">
-      {loading ? (
-        <CircularProgress />
-      ) : (
-        <div className="box">
-          <p id="header">Edit Link</p>
-          <input placeholder="Enter URL Name" onChange={handleNameChange} name="name" value={name} />
-          <input placeholder="Ener URL Link" onChange={handleURLChange} name="URL" value={URL} />
-          <button className="button" onClick={handleEditSubmit}>
-            Submit
-          </button>
-          {validURL ? (
-            <Alert
-              sx={{ color: "white", width: "300px" }}
-              variant="outlined"
-              severity="error"
+      <div className="box">
+        {!loading && (
+          <form className="AddLink-form">
+            <div className="AddLink-URL">
+              <label>Enter URL Name</label>
+              {console.log(data)}
+              <input
+                required
+                disabled={disable}
+                type="text"
+                value={!loading && data.name}
+                placeholder="URL Name"
+                onChange={handleNameInput}
+              />
+            </div>
+            <div className="AddLink-URL">
+              <label>Enter URL Link</label>
+              <input
+                required
+                disabled={disable}
+                type="text"
+                placeholder="URL Link"
+                value={data.link}
+                onChange={handleLinkInput}
+              />
+            </div>
+            <div className="linkPreview">
+              <LinkPreview
+                imageURL={imageURL}
+                urlLink={data.link}
+              />
+            </div>
+            <button
+              disabled={disable}
+              type="submit"
+              className="AddLink-button"
+              onClick={handleSubmit}
             >
-              <AlertTitle>Error</AlertTitle>
-              Specify a valid URL — <strong>check it out!</strong>
-            </Alert>
-          ) : success ? (
-            <Alert
-              sx={{ color: "white", width: "300px" }}
-              variant="outlined"
-              severity="success"
-            >
-              <AlertTitle>Success!!</AlertTitle>
-              Your Link Has Been Succesfully Edited{" "}
-              <div id="cursor" onClick={handleGoBack}>
-                Click To Go Back
-              </div>
-            </Alert>
-          ) : (
-            <></>
-          )}
-        </div>
-      )}
+              Done
+            </button>
+          </form>
+        )}
+      </div>
+      <div>
+        {validURL ? (
+          <Alert
+            sx={{ color: "black", width: "300px" }}
+            variant="outlined"
+            severity="error"
+          >
+            <AlertTitle>Error</AlertTitle>
+            Specify a valid URL — <strong>check it out!</strong>
+          </Alert>
+        ) : flag !== 0 ? (
+          <Alert
+            sx={{ color: "black", width: "300px" }}
+            variant="outlined"
+            severity="success"
+          >
+            <AlertTitle>success</AlertTitle>
+            Your URL has been added to your tree —{" "}
+            <strong>check it out!</strong>
+            <div onClick={handleRouterChange}> click to navigate back </div>
+          </Alert>
+        ) : (
+          <></>
+        )}
+      </div>
+      <div>
+        {validateInput ? (
+          <Alert
+            sx={{ color: "black", width: "300px" }}
+            variant="outlined"
+            severity="error"
+          >
+            <AlertTitle>
+              <b>Error</b>
+            </AlertTitle>
+            URL Name cannot be empty — <strong>check it out!</strong>
+          </Alert>
+        ) : (
+          <></>
+        )}
+      </div>
     </div>
   );
 }

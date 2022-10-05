@@ -1,0 +1,89 @@
+.Collections{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 26px ;
+}
+.Collections a{
+    text-decoration: none;
+}
+.CollectionsHeader{
+    width: 350px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.CollectionsAddNew button{
+    box-sizing: border-box;
+    width: 86px;
+    height: 28px;
+    background-color: #ffffff;
+    overflow: visible;
+    border-radius: 4px;
+    border: 1px solid var(--Theme_Color, #4473a2);
+    color: #4473a2;
+    font-size: 14px;
+    font-weight: bold;
+
+}
+
+.CollectionsViewAllButton a{
+    width: 86px;
+    height: 28px;
+    border: none;
+    color: #4473a2;
+    background: transparent;
+    font-weight: bold;
+}
+
+.CollectionBox{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.CollectionBox a{
+    text-decoration: none;
+    color: black;
+}
+.Collection{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+  width: 114px;
+  height: 120px;
+  overflow: visible;
+  border-radius: 4px;
+  border: 1px solid var(--Card_grey, rgba(203, 200, 200, 0.35));
+  margin: 10px;
+}
+
+.Collection img{
+    width: 76px;
+    height: 76px;
+}
+
+.Collection p{
+    margin: 0;
+    font-weight: bold;
+}
+
+.linkLength{
+    background-color:  rgba(0, 0, 0, 0.223);
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    position: relative;
+    top: 1px;
+    left: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.linkPriview{
+    display: flex;
+}

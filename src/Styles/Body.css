@@ -1,38 +1,70 @@
 .Body{
+    margin-top: 60px;
+}
+
+
+.Body-button{
+    margin: 20px;
+}
+
+.Body-links{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
-    height: 100vh;
-    background-color: black;
-}
-.Body-links{
-    max-height: 400px;
-    overflow-x: hidden;
+    justify-content: center;
 }
 
-.Body-button{
-    margin: 50px;
+.Body-links-header{
+    width: 350px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.Body-links-header p{
+    width: auto; /* 65px */
+  height: auto; /* 17px */
+  white-space: pre;
+  font-weight: 500;
+  font-family: "Inter-Medium", "Inter", sans-serif;
+  color: #000000;
+  font-size: 14px;
+  letter-spacing: 0px;
+  line-height: 1.2;
 }
 
+.Body-links-button{
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 86px;
+    height: 28px;
+    background-color: #ffffff;
+    overflow: visible;
+    border-radius: 4px;
+    border: 1px solid var(--Theme_Color, #4473a2);
+}
+
+.Body-links-button a{
+    text-decoration: none;
+    color: #4473a2;
+    font-size: 14px;
+    font-weight: 600;
+}
 .Body-addLink a{
     color: black
 }
-.Body ::-webkit-scrollbar{
-    width: 2px;
-    transition: ease-in-out 3s;
+.Link{
+    padding: 20px;
+    display: flex;
+}
 
+.Link a{
+    text-decoration: none;
+    color: #000000;
+    width: 100%;
 }
-.Body-links:hover ::-webkit-scrollbar-track{
-    background-color: transparent;
-}
-.Body:hover ::-webkit-scrollbar-thumb{
-    background-color: rgb(39, 39, 39);
-    border-radius: 30px;
-}
-@media screen and (max-width: 480px) {
-    .Body{
-        height: 823px;
-    }
+@media screen and (max-width: 520px) {
 
 }

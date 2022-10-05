@@ -1,0 +1,32 @@
+.LinkPreview{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 360px;
+    height: 96px;
+    margin-bottom: 26px;
+}
+
+.LinkPreview img{
+    width: 96px;
+    height: 96px;
+}
+
+.placeholder{
+    width: 96px;
+    height: 96px;
+    background-color: var(--Grey, #797979);
+    overflow: visible;
+}
+
+.LinkPreview-Action{
+    width: auto; /* 156px */
+  height: auto; /* 24px */
+  white-space: pre;
+  font-family: "Inter", sans-serif;
+  color: #ee4444;
+  font-size: 20px;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  margin: 36px 21px;
+}

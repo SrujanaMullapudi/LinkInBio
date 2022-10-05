@@ -1,15 +1,25 @@
 import React from "react";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import SignIn from "../SignIn";
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import "../../Styles/Button.css";
 import { useState } from "react";
 import DeleteDialog from "./DeleteDialog";
 import EditDialog from "./EditDialog";
 import axios from "../../axios";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, createTheme, Switch } from "@mui/material";
 import { Box } from "@mui/system";
 import { useNavigate } from "react-router";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import { ThemeProvider } from "@emotion/react";
+
+const theme = createTheme({
+  palette: {
+    siteDefault: {
+      main: "#4473a2",
+      contrastText: "#fff",
+    },
+  },
+});
 
 function Button(props) {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
@@ -25,6 +35,7 @@ function Button(props) {
   const handleEditSetOpen = (data) => {
     setOpenEditDialog(data);
   };
+
   const handleDelete = async (data) => {
     if (data) {
       setLoader(true);
@@ -38,14 +49,20 @@ function Button(props) {
       setLoader(false);
     }
   };
-  const handleEdit = () => {
-    navigate(`/Edit/${props.user.uid}/${props.idx}`);
+  
+  const handleEdit = (type) => {
+    if(type === "Simple Link"){
+      navigate(`/Edit/${props.user.uid}/${props.idx}`);
+    }else{
+      navigate(`/EditProfessionalLink/${props.user.uid}/${props.idx}`);
+    }
   };
-
+  const handleNewTabOpen = (url) => {
+    window.open(url, "_blank");
+  };
   return (
     <div className="buttonBox">
       <div className="button">
-        <DeleteIcon onClick={handleSetOpen} className="delete" />
         {loader ? (
           <Box
             sx={{
@@ -55,12 +72,40 @@ function Button(props) {
             <CircularProgress />
           </Box>
         ) : (
-          <a href={props.url}>
-            <button>{props.name}</button>
-          </a>
+          <div className="buttonHeader">
+            {props.imageURL.length > 0 ? (
+              <img src={props.imageURL} alt={props.name} />
+            ) : (
+              <div className="placeholder"></div>
+            )}
+            <div className="buttonBody">
+              <div className="linkName">
+                <p>{props.name}</p>
+              </div>
+              <div className="CouponCriteria">
+                <p>{props.CouponCriteria}</p>
+              </div>
+            </div>
+          </div>
         )}
-
-        <EditIcon  onClick={handleEdit} className="edit" />
+        <div className="buttonFooter">
+          <div className="linkType">
+            <b>
+              <p>{props.type}</p>
+            </b>
+          </div>
+          <div className="buttonActions">
+            <DeleteOutlinedIcon onClick={()=>handleSetOpen(props.type)} className="delete" />
+            <EditOutlinedIcon onClick={()=>handleEdit(props.type)} className="edit" />
+            <ThemeProvider theme={theme}>
+              <Switch color="siteDefault" className="Switch" />
+            </ThemeProvider>
+            <OpenInNewIcon
+              onClick={() => handleNewTabOpen(props.url)}
+              className="openInNew"
+            />
+          </div>
+        </div>
       </div>
       {openDeleteDialog ? (
         <DeleteDialog
