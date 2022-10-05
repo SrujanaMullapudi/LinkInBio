@@ -1,5 +1,6 @@
 import express from "express";
 import Users from "../Models/Users.js";
+import {v4 as uuid} from "uuid";
 
 export const postLinks = (req, res) => {
   try {
@@ -91,6 +92,7 @@ export const checkUsernameAvailable = (req, res) => {
             userName: name,
             photoURL,
             links: [],
+            socialLinks:{initialze_id:uuid()},
             collections:[]
           });
           user.save();

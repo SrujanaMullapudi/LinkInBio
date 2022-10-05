@@ -13,13 +13,13 @@ export const postSocialLinks = (req, res) => {
             return res.status(404).send({ message: 'url is no valid' })
         }
 
-        Users.find({ userId: req.params.uid }, (err, foundUsers) => {
+        Users.find({ userId: req.headers.uid }, (err, foundUsers) => {
             if (err) {
                 console.log(err);
             } else {
                 if (foundUsers.length == 1) {
                     Users.updateOne(
-                        { userId: req.params.uid },
+                        { userId: req.headers.uid },
                         { $set: { [`socialLinks.${socialLink.platform}`]: socialLink.url } },
                         (err, foundUser) => {
                             if (err) {
