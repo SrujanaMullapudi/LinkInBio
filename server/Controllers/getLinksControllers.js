@@ -1,33 +1,59 @@
 import express from "express";
 import Users from "../Models/Users.js";
+import {v4 as uuid} from "uuid";
 
 export const postLinks = (req, res) => {
   try {
-    const link = {
-      id: req.body.uid,
-      name: req.body.name,
-      link: req.body.link,
-    };
-    Users.find({ userId: req.params.uid }, (err, foundUsers) => {
-      if (err) {
-        console.log(err);
-      } else {
-        if (foundUsers.length == 1) {
-          Users.updateOne(
-            { userId: req.params.uid },
-            { $push: { links: link } },
-            (err, foundUser) => {
-              if (err) {
-                console.log(err);
-              } else {
-                console.log(foundUser);
-                res.status(200).json({ message: "links added successfully" });
+    let link = {};
+    if (req.body.type === "Simple Link") {
+      link = {
+        id: req.body.uid,
+        name: req.body.name,
+        link: req.body.link,
+        imageURL: req.body.imageURL,
+        type: req.body.type,
+      };
+      Users.find({ userId: req.params.uid }, (err, foundUsers) => {
+        if (err) {
+          console.log(err);
+        } else {
+          if (foundUsers.length == 1) {
+            Users.updateOne(
+              { userId: req.params.uid },
+              { $push: { links: link } },
+              (err, foundUser) => {
+                if (err) {
+                  console.log(err);
+                } else {
+                  res.status(200).json({ message: "links added successfully" });
+                }
               }
-            }
-          );
+            );
+          }
         }
-      }
-    });
+      });
+    } else if (req.body.type === "Professional Link") {
+      console.log("in else if");
+      Users.find({ userId: req.params.uid }, (err, foundUsers) => {
+        if (err) {
+          console.log(err);
+        } else {
+          if (foundUsers.length == 1) {
+            Users.updateOne(
+              { userId: req.params.uid },
+              { $push: { links: req.body } },
+              (err, foundUser) => {
+                if (err) {
+                  console.log(err);
+                } else {
+                  res.status(200).json({ message: "links added successfully" });
+                }
+              }
+            );
+          }
+        }
+      });
+    }
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
@@ -36,12 +62,10 @@ export const postLinks = (req, res) => {
 export const getLinks = (req, res) => {
   try {
     const id = req.params.uid;
-    console.log(id);
     Users.find({ userId: id }, (err, foundLinks) => {
       if (err) {
         console.log(err);
       } else {
-        console.log(foundLinks);
         res.status(200).json(foundLinks);
       }
     });
@@ -51,11 +75,11 @@ export const getLinks = (req, res) => {
 };
 
 export const checkUsernameAvailable = (req, res) => {
+  console.log(req.body);
   try {
     const name = req.body.name;
     const id = req.body.uid;
     const photoURL = req.body.photoURL;
-    console.log(name, id, photoURL);
     Users.find({ userName: name }, (err, foundUsers) => {
       if (err) {
         console.log(err);
@@ -68,6 +92,8 @@ export const checkUsernameAvailable = (req, res) => {
             userName: name,
             photoURL,
             links: [],
+            socialLinks:{initialze_id:uuid()},
+            collections:[]
           });
           user.save();
           res.status(200).json({ message: "Tree Created Succesfully" });
@@ -99,7 +125,6 @@ export const deleteLink = async (req, res) => {
 
 export const publicViewing = (req, res) => {
   const userName = req.params.username;
-  console.log(userName);
   Users.find({ userName }, (err, founduser) => {
     if (err) {
       console.log(err);
@@ -134,30 +159,46 @@ export const editLink = async (req, res) => {
   try {
     const userId = req.params.uid;
     const linkId = req.params.linkId;
-    // console.log(linkId);
-    const newLinkName = req.body.name;
-    const newLinkURL = req.body.URL;
-    console.log(req.body);
-    // Users.find({userId:userId, "links.$.id" : linkId}, (err,foundUser)=>{
-    //   if(err){
-    //     console.log(err);
-    //   }else{
-    //     console.log(foundUser);
-    //   }
-    // })
-    // console.log(newLinkURL,newLinkName);
-    Users.updateOne(
-      { userId: userId, "links.id": linkId },
-      {
-        $set: {
-          "links.$.name": newLinkName,
-          "links.$.link": newLinkURL,
+    if (req.body.type === "Simple Link") {
+      const newLinkName = req.body.name;
+      const newLinkURL = req.body.link;
+
+      Users.updateOne(
+        { userId: userId, "links.id": linkId },
+        {
+          $set: {
+            "links.$.name": newLinkName,
+            "links.$.link": newLinkURL,
+            "links.$.imageURL": req.body.imageURL,
+          },
         },
-      },function(err){
-        console.log(err);
-      }
-    );
-    res.status(200).json({message:"successfully updated"});
+        function (err) {
+          console.log(err);
+        }
+      );
+      res.status(200).json({ message: "successfully updated" });
+    } else if (req.body.type === "Professional Link") {
+      const {name, link, imageURL, CouponCode, CouponCriteria, CouponCodeExipry, OfferType, OfferValue} = req.body
+      Users.updateOne(
+        { userId: userId, "links.id": linkId },
+        {
+          $set: {
+            "links.$.name": name,
+            "links.$.link": link,
+            "links.$.imageURL": imageURL,
+            "links.$.CouponCode": CouponCode,
+            "links.$.CouponCriteria":CouponCriteria,
+            "links.$.CouponCodeExipry":CouponCodeExipry,
+            "links.$.OfferType":OfferType,
+            "links.$.OfferValue":OfferValue
+          },
+        },
+        function (err) {
+          console.log(err);
+        }
+      );
+      res.status(200).json({ message: "successfully updated" });
+    }
   } catch (error) {
     console.log(error);
   }

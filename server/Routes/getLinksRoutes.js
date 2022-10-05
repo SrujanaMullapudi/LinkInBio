@@ -3,11 +3,12 @@ import { postLinks,getLinks, checkUsernameAvailable,publicViewing, deleteLink, g
 const router = express.Router();
 
 router.get('/:uid', getLinks); // /links/:uid
+router.post('/:uid',postLinks);
 router.get('/Edit/:uid/:linkId',getEditLink);
 router.post('/Edit/:uid/:linkId',editLink)
 router.get('/public/:username',publicViewing) // /links/public/:username
-router.post('/checkusername',checkUsernameAvailable);
+router.post('/newProfile/create',checkUsernameAvailable);
 router.post('/deleteLink/:uid/:idx',deleteLink);
-router.post('/:uid',postLinks);
+
 
 export default router;
